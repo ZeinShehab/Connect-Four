@@ -15,12 +15,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="out\build\x64-debug\cmakefiles\3.23.22060601-msvc_2\compileridc\CMakeCCompilerId.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="out\build\x64-debug\cmakefiles\showincludes\main.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\board.c">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -30,9 +24,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\board.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="out\build\x64-debug\cmakefiles\showincludes\foo.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

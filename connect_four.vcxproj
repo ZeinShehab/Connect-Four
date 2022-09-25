@@ -98,14 +98,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="out\build\x64-debug\cmakefiles\3.23.22060601-msvc_2\compileridc\CMakeCCompilerId.c" />
-    <ClCompile Include="out\build\x64-debug\cmakefiles\showincludes\main.c" />
     <ClCompile Include="src\board.c" />
     <ClCompile Include="src\main.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\board.h" />
-    <ClInclude Include="out\build\x64-debug\cmakefiles\showincludes\foo.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="out\build\x64-debug\cmakefiles\3.23.22060601-msvc_2\CMakeDetermineCompilerABI_C.bin" />
