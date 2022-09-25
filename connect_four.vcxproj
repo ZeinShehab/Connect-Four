@@ -104,12 +104,6 @@
   <ItemGroup>
     <ClInclude Include="include\board.h" />
   </ItemGroup>
-  <ItemGroup>
-    <None Include="out\build\x64-debug\cmakefiles\3.23.22060601-msvc_2\CMakeDetermineCompilerABI_C.bin" />
-  </ItemGroup>
-  <ItemGroup>
-    <ResourceCompile Include="out\build\x64-debug\cmakefiles\connectfour.dir\manifest.rc" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
