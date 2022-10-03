@@ -1,11 +1,7 @@
 #include <stdio.h>
-#include "../include/board.h"
+#include "../include/game.h"
 
 int main() {
-	int board[BOARD_HEIGHT * BOARD_WIDTH];
-
-	reset(board);
-	show(board);
-
+	run();  // Run main game loop
    return 0;
 }
