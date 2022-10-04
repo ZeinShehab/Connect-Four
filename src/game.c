@@ -10,10 +10,10 @@
 */
 int isValidMove(int col, int* board)
 {
-	if (col <= 0 || col > BOARD_WIDTH) {
+	if (col < 0 || col >= BOARD_WIDTH) {
 		return 0;
 	}
-	if (isFullColumn(col, board)) {
+	else if (isFullColumn(col, board)) {
 		return 0;
 	}
 	return 1;
@@ -27,11 +27,11 @@ int isValidMove(int col, int* board)
 void makeMove(int col, int player, int* board)
 {
 	// col - 1 to change from 1 indexed to zero indexed. user will give 1 indexed input
-	if (isValidMove(col, board)) {
+	if (isValidMove(col-1, board)) {
 		int row = nextEmptyRow(col-1, board);
 		set(row, col-1, player, board);
 
-		set(BOARD_HEIGHT - 1, col-1, get(BOARD_HEIGHT - 1, col-1, board) + 1, board);
+		set(BOARD_HEIGHT - 1, col-1, numPiecesInCol(col-1, board) + 1, board);
 	}
 }
 
