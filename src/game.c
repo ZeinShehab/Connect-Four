@@ -52,7 +52,39 @@ void winIfWinner(int player)
 */
 int checkWin(int* board)
 {
-	// TODO: Implement
+	//search for four consecutive numbers in the 2-d array.
+	//we will check horizentally, vertically, and diagonally.
+	for (int i = 0; i < 6*7; i += 7) {
+		int count = 0;
+		for (int j = 0; j < 7-1; j++) {
+
+			if ((board[i + j] == 1 && board[i + j + 1] == 1) || (board[i + j] == 2 && board[i + j + 1] == 2)) {
+				count += 1;
+			}
+			else
+				count = 0;
+			if (count == 3 && (board[i + j] == 1 && board[i + j + 1] == 1))
+				return 1;
+			else if (count == 3 && (board[i + j] == 2 && board[i + j + 1] == 2))
+				return 2;
+		}
+	}
+	for (int i = 0; i < 7 ; i ++) {
+		int count = 0;
+		for (int j = 0; j < 6 * 7-7; j+=7) {
+			if ((board[i + j] == 1 && board[i + j + 7] == 1) || (board[i + j] == 2 && board[i + j + 7] == 2)) {
+				count += 1;
+			}
+			else
+				count = 0;
+			if (count == 3 && (board[i + j] == 2 && board[i + j + 7] == 2))
+				return 2;
+			else if (count == 3 && (board[i + j] == 1 && board[i + j + 7] == 1))
+				return 1;
+		}
+	}
+
+
 	return 0;
 }
 
