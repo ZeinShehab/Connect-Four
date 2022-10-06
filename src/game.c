@@ -52,19 +52,23 @@ void winIfWinner(int player)
 */
 int checkWin(int* board)
 {
-	//search for four consecutive numbers in the 2-d array.
-	//we will check horizentally, vertically, and diagonally.
+	// search for four consecutive numbers in the 2-d array.
+	// we will check horizontally, vertically, and diagonally.
 	for (int i = 0; i < 6*7; i += 7) {
 		int count = 0;
+
 		for (int j = 0; j < 7-1; j++) {
 
 			if ((board[i + j] == 1 && board[i + j + 1] == 1) || (board[i + j] == 2 && board[i + j + 1] == 2)) {
 				count += 1;
 			}
+
 			else
 				count = 0;
+
 			if (count == 3 && (board[i + j] == 1 && board[i + j + 1] == 1))
 				return 1;
+
 			else if (count == 3 && (board[i + j] == 2 && board[i + j + 1] == 2))
 				return 2;
 		}
@@ -75,14 +79,72 @@ int checkWin(int* board)
 			if ((board[i + j] == 1 && board[i + j + 7] == 1) || (board[i + j] == 2 && board[i + j + 7] == 2)) {
 				count += 1;
 			}
+
 			else
 				count = 0;
+
 			if (count == 3 && (board[i + j] == 2 && board[i + j + 7] == 2))
 				return 2;
+
 			else if (count == 3 && (board[i + j] == 1 && board[i + j + 7] == 1))
 				return 1;
 		}
 	}
+	//horizental
+	int level = 0;
+	int count = 0;
+	int count2 = 0;
+	for (int i = 0; i < 6 * 7; i += 7) {
+		if (board[i + level] == 1)
+			count += 1;
+		else
+			count = 0;
+		if (board[i + level] == 2)
+			count2 += 1;
+		else
+			count2 = 0;
+
+		if (count == 4)
+			return 1;
+		if (count2 == 4)
+			return 2;
+		level += 1;
+	}
+	count = 0;
+	count2 = 0;
+	level = 0;
+	for (int i = 7; i < 6 * 7; i += 7){
+		if (board[i + level] == 1)
+			count += 1;
+		else
+			count = 0;
+		if (board[i + level] == 2)
+			count2 += 1;
+		else
+			count2 = 0;
+		if (count == 4)
+			return 1;
+		if (count2 == 4)
+			return 1;
+		level += 1;
+	}
+	count = 0;
+	level = 0;
+	count2 = 0;
+	for (int i = 14; i < 6 * 7; i += 7) {
+		if (board[i + level] == 1)
+			count += 1;
+		else
+			count = 0;
+		if (board[i + level] == 2)
+			count2 += 1;
+		if (count == 4)
+			return 1;
+		if (count2 == 4)
+			return 2;
+		level += 1;
+	}
+
 
 
 	return 0;
