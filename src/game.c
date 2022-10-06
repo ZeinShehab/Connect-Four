@@ -55,7 +55,7 @@ int getPlayerMove(int player, int* board)
 * Checks the given board for any 4 consecutive pieces in any direction.
 * Will return 0 if there is no winner otherwise it returns the number of the player who won.
 */
-int checkWin(int* board)
+int checkWin(int row, int col, int player, int* board)
 {
 	// TODO: Implement
 	return 0;
@@ -80,6 +80,9 @@ void clrscr()
 	system("@cls||clear");
 }
 
+/*
+* Plays out a single game cycle for given player
+*/
 void playerTurn(int player, int* board)
 {
 	int col = getPlayerMove(player, board);  // time this to know how much time player took.
@@ -89,7 +92,7 @@ void playerTurn(int player, int* board)
 	clrscr();
 	show(board);
 
-	int winner = checkWin(board);
+	int winner = checkWin(row, col, player, board);
 	winIfWinner(winner);
 }
 
@@ -105,7 +108,6 @@ void run()
 	show(board);
 
 	int quit = 0;
-
 	while (!quit) {
 		playerTurn(1, board);
 		playerTurn(2, board);
