@@ -9,4 +9,4 @@ file (GLOB source_files "${source_dir}/*.c")
 file (GLOB include_files "${include_dir}/*.h")
 
 
-add_executable (ConnectFour ${source_files}  ${include_files})
+add_executable (ConnectFour ${source_files}  ${include_files} "tests/tests.c"  "tests/boardTests.c" "tests/gameTests.c"  "tests/gameTests.h" "tests/boardTests.h" "tests/tests.h")

@@ -101,10 +101,16 @@
     <ClCompile Include="src\board.c" />
     <ClCompile Include="src\game.c" />
     <ClCompile Include="src\main.c" />
+    <ClCompile Include="tests\boardTests.c" />
+    <ClCompile Include="tests\gameTests.c" />
+    <ClCompile Include="tests\tests.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\board.h" />
     <ClInclude Include="include\game.h" />
+    <ClInclude Include="tests\boardTests.h" />
+    <ClInclude Include="tests\gameTests.h" />
+    <ClInclude Include="tests\tests.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
