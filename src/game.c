@@ -62,7 +62,7 @@ int checkWin(int row, int col, int player, int* board)
 	// diagonal left up or down
 	// diagonal right up or down
 	// down
-	//search right
+	//search rightt
 	int count = 0;
 	if (col <= BOARD_WIDTH - 4) {
 		for (int i = col; i < BOARD_WIDTH; i++) { // search right
