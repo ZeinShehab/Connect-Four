@@ -4,9 +4,9 @@
 #include <stdlib.h>
 
 /*
-* A valid move is a move that is within bounds of the board 
+* A valid move is a move that is within bounds of the board
 * and is not in a full column.
-* 
+*
 * **Effects**: return 1 if the move is valid and 0 otherwise
 */
 int isValidMove(int col, int* board)
@@ -57,10 +57,112 @@ int getPlayerMove(int player, int* board)
 */
 int checkWin(int row, int col, int player, int* board)
 {
-	// TODO: Implement
+	// check how we will search
+	// left or right
+	// diagonal left up or down
+	// diagonal right up or down
+	// down
+	//search rightt
+	int count = 0;
+	if (col <= BOARD_WIDTH - 4) {
+		for (int i = col; i < BOARD_WIDTH; i++) { // search right
+			if (board[7 * row + i] == player)
+				count += 1;
+			else
+				count = 0;
+			if (count == 4)
+				return player;
+		}
+		count = 0;
+	}
+	if (row <= BOARD_HEIGHT - 1 - 4) {
+		for (int i = row + 1; i < BOARD_HEIGHT - 1; i++) {// search down 
+			if (board[7 * i + col] == player)
+				count += 1;
+			else
+				count = 0;
+			if (count == 3)
+				return player;
+		}
+
+	}
+
+	if (col >= BOARD_WIDTH - 4) {
+		for (int i = col; i >= 0; i--) { // search left
+			if (board[7 * row + i] == player)
+				count += 1;
+			else
+				count = 0;
+			if (count == 4)
+				return player;
+		}
+	}
+	if (row >= BOARD_HEIGHT - 1 - 4 && col < BOARD_WIDTH - 4) {
+		int level = 1;
+		count = 0;
+		for (int i = row - 1; i >= 0; i--) { // search diagonally up and to the right
+			if (player == board[7 * i + col + level])
+				count += 1;
+			else
+				count = 0;
+			if (count == 3)
+				return player;
+			level += 1;
+		}
+
+	}
+	if (row >= BOARD_HEIGHT - 1 - 4 && col >= BOARD_WIDTH - 4) {
+		int level = 1;
+		count = 0;
+		for (int i = row - 1; i >= 0; i--) { // search diagonally up and to the left
+			if (player == board[7 * i + col - level])
+				count += 1;
+			else
+				count = 0;
+			if (count == 3)
+				return player;
+			level += 1;
+		}
+
+	}
+	if (row <= BOARD_HEIGHT - 1 - 4 && col >= BOARD_WIDTH - 4) {
+
+		int level = 1;
+		count = 0;
+		for (int i = row + 1; i < BOARD_HEIGHT - 1; i++) { // search diagonally DOWN and to the left
+			if (player == board[7 * i + col - level])
+				count += 1;
+			else
+				count = 0;
+			if (count == 3)
+				return player;
+			level += 1;
+		}
+
+	}
+	if (row <= BOARD_HEIGHT - 1 - 4 && col <= BOARD_WIDTH - 4) {
+
+		int level = 1;
+		count = 0;
+		for (int i = row + 1; i < BOARD_HEIGHT - 1; i++) { // search diagonally DOWN and to the right
+			if (player == board[7 * i + col + level])
+				count += 1;
+			else
+				count = 0;
+			if (count == 3)
+				return player;
+			level += 1;
+		}
+
+	}
+
+
+
+
+
+
 	return 0;
 }
-
 /*
 * If player is 0 no winner is declared otherwise the player number given is declared as winner and the game quits.
 */
@@ -103,7 +205,7 @@ void run()
 {
 	int board[BOARD_HEIGHT * BOARD_WIDTH];
 	reset(board);
-	
+
 	clrscr();
 	show(board);
 
