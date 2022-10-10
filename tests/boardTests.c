@@ -137,13 +137,52 @@ int testnumPiecesInCol() {
 
 	return 0;
 }
+int testnextEmptyRow() 
+{
+	int board[BOARD_HEIGHT * BOARD_WIDTH];
+	reset(board);
+
+	// filling the board with random variable at different columns
+	set(6, 0, 1, board);
+	set(6, 2, 3, board);
+	set(6, 4, 4, board);
+	set(6, 6, 5, board);
+
+	// testing the first column
+	int tc1 = nextEmptyRow(0, board);
+	if (tc1 != 4) {
+		return 1;
+	}
+
+	// testing the 3rd column
+	int tc2 = nextEmptyRow(2, board);
+	if (tc2 != 2) {
+		return 2;
+	}
+
+	// testing the 5th column
+	int tc3 = nextEmptyRow(4, board);
+	if (tc3 != 1) {
+		return 3;
+	}
+
+	//testing the last column
+	int tc4 = nextEmptyRow(6, board);
+	if (tc4 != 0) {
+		return 4;
+	}
+
+	return 0;
+
+}
 
 void runBoardTests()
 {
-	printTestResult("TestGetSet", testGetSet());
-	printTestResult("TestIsFullColumn", testIsFullColumn());
-	printTestResult("TestReset", testReset());
-	printTestResult("TestnumPiecesInCol", testnumPiecesInCol());
+	printTestResult("testnextEmptyRow", testnextEmptyRow());
+	printTestResult("testGetSet", testGetSet());
+	printTestResult("testIsFullColumn", testIsFullColumn());
+	printTestResult("testReset", testReset());
+	printTestResult("testnumPiecesInCol", testnumPiecesInCol());
 
 
 }
