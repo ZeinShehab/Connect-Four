@@ -1,7 +1,10 @@
 #include "../include/game.h"
 #include "../include/board.h"
+#include "../include/console.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
+#include <string.h>
 
 /*
 * A valid move is a move that is within bounds of the board
@@ -41,8 +44,15 @@ int getPlayerMove(int player, int* board)
 	int invalidCounter = 0;
 	while (!isValidMove(move - 1, board)) {
 		if (invalidCounter >= 1) {
-			printf("Invalid move. Try again. ");
+			clrscr();
+			show(board);
+
+			if (CENTER_HOZ) {
+				centerline(strlen("Invalid move. Try again."));
+			}
+			printf("Invalid move. Try again.\n");
 		}
+		centerline(strlen("Player 1 move: ") + 1);
 		printf("Player %d move: ", player);
 		scanf_s("%d", &move);
 		invalidCounter++;
@@ -62,7 +72,11 @@ int checkWin(int row, int col, int player, int* board)
 	// diagonal left up or down
 	// diagonal right up or down
 	// down
+<<<<<<< HEAD
 	//search right
+=======
+	//search rightt
+>>>>>>> 2a621e2b1fb812a89bea77a722c8fc06b93429a9
 	int count = 0;
 	if (col <= BOARD_WIDTH - 4) {
 		for (int i = col; i < BOARD_WIDTH; i++) { // search right
@@ -153,6 +167,7 @@ int checkWin(int row, int col, int player, int* board)
 				return player;
 			level += 1;
 		}
+<<<<<<< HEAD
 
 	}
 
@@ -161,33 +176,44 @@ int checkWin(int row, int col, int player, int* board)
 
 
 
+=======
+	}
+>>>>>>> 2a621e2b1fb812a89bea77a722c8fc06b93429a9
 	return 0;
 }
+/*
+* Checks if the board is full. A tie is declared if the board is full and no player has won.
+* Returns 0 if there is no tie otherwise the number of player who wins by time.
+*/
+int checkTie(int totalPieces, int playerOneTime, int playerTwoTime)
+{
+	int tie = (totalPieces == BOARD_WIDTH * (BOARD_HEIGHT - 1));			// if board is full then we have a tie
+	return tie * (playerOneTime < playerTwoTime ? 1 : 2);					// if there is no tie the tieWinner will be 0 and there will be no winner otherwise the winner is selected
+}
+
 /*
 * If player is 0 no winner is declared otherwise the player number given is declared as winner and the game quits.
 */
 void winIfWinner(int player)
 {
 	if (player != 0) {
-		printf("Player %d wins", player);
+		centerline(strlen("Player 1 wins"));
+		printf("Player %d wins\n\n", player);
 		exit(0);
 	}
 }
 
 /*
-* Clears the console and resets the cursor to (0,0)
-*/
-void clrscr()
-{
-	system("@cls||clear");
-}
-
-/*
 * Plays out a single game cycle for given player
 */
-void playerTurn(int player, int* board)
+void playerTurn(int player, int* board, int *playerTime)
 {
-	int col = getPlayerMove(player, board);  // time this to know how much time player took.
+	clock_t start = clock(), diff;
+	int col = getPlayerMove(player, board);									// time this to know how much time player took to make a move.
+	diff = clock() - start;
+	int msec = diff * 1000 / CLOCKS_PER_SEC;
+	*playerTime += msec;
+
 	int row = nextEmptyRow(col, board);
 	makeMove(row, col, player, board);
 
@@ -209,9 +235,23 @@ void run()
 	clrscr();
 	show(board);
 
+	int totalPieces = 0;
+
+	int playerOneTime = 0;
+	int playerTwoTime = 0;
+
 	int quit = 0;
 	while (!quit) {
-		playerTurn(1, board);
-		playerTurn(2, board);
+		playerTurn(1, board, &playerOneTime);
+		totalPieces++;
+
+		int tieWinner = checkTie(totalPieces, playerOneTime, playerTwoTime);
+		winIfWinner(tieWinner);
+
+		playerTurn(2, board, &playerTwoTime);
+		totalPieces++;
+
+		tieWinner = checkTie(totalPieces, playerOneTime, playerTwoTime);
+		winIfWinner(tieWinner);
 	}
 }
