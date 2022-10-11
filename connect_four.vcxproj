@@ -99,6 +99,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\board.c" />
+    <ClCompile Include="src\console.c" />
     <ClCompile Include="src\game.c" />
     <ClCompile Include="src\main.c" />
     <ClCompile Include="tests\boardTests.c" />
@@ -107,6 +108,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\board.h" />
+    <ClInclude Include="include\console.h" />
     <ClInclude Include="include\game.h" />
     <ClInclude Include="tests\boardTests.h" />
     <ClInclude Include="tests\gameTests.h" />

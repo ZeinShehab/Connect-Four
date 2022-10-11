@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include "../include/board.h"
-
+#include "../include/console.h"
 
 /*
 * **Requires**: i and j to be positive indices within bounds
@@ -32,24 +32,54 @@ void reset(int* board)
 */
 void hozLine()
 {
+	if (CENTER_HOZ) {
+		centerline(BOARD_WIDTH * 3);
+	}
 	for (int i = 0; i < BOARD_WIDTH * 3; i++) {
-		printf("-");
+		printBlue("-");
 	}
 	printf("\n");
 }
 
 void show(int* board)
 {
+	if (CENTER_VER) {
+		centerTextVer(14);
+	}
+
 	hozLine();
 	for (int i = 0; i < BOARD_HEIGHT-1; i++) {
+		if (CENTER_HOZ) {
+			centerline(BOARD_WIDTH * 3);
+		}
+
 		for (int j = 0; j < BOARD_WIDTH; j++) {
-			printf("|%d|", get(i, j, board));
+			int value = get(i, j, board);
+
+			if (value == 0) {
+				printBlue("|");
+				printf("%d", value);
+				printBlue("|");
+			}
+			else if (value == 1) {
+				printBlue("|");
+				printIntRed("%d", value);
+				printBlue("|");
+			}
+			else {
+				printBlue("|");
+				printIntYellow("%d", value);
+				printBlue("|");
+			}
 		}
 		printf("\n");
 	}
 	hozLine();
 
 	// -- FOR DEBUGGING REMOVE LATER -- //
+	if (CENTER_HOZ) {
+		centerline(BOARD_WIDTH * 3);
+	}
 	for (int i = 0; i < BOARD_WIDTH; i++) {
 		printf("|%d|", get(BOARD_HEIGHT - 1, i, board));
 	}
