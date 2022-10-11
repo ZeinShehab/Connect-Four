@@ -1,7 +1,7 @@
 #include "tests.h"
 #include "gameTests.h"
 #include "boardTests.h"
-
+#include "../include/console.h"
 
 void runTests()
 {
@@ -12,9 +12,13 @@ void runTests()
 void printTestResult(char* testName, int testResult)
 {
 	if (testResult != 0) {
-		printf("%s failed at test case: %d\n", testName, testResult);
+		printRed("[-] ");
+		printRed(testName);
+		printIntRed(" failed at test case: %d\n", testResult);
 	}
 	else {
-		printf("%s passed!\n", testName);
+		printGreen("[+] ");
+		printGreen(testName);
+		printGreen(" passed!\n");
 	}
 }

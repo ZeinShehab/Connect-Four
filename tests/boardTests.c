@@ -178,11 +178,9 @@ int testnextEmptyRow()
 
 void runBoardTests()
 {
-	printTestResult("testnextEmptyRow", testnextEmptyRow());
-	printTestResult("testGetSet", testGetSet());
-	printTestResult("testIsFullColumn", testIsFullColumn());
-	printTestResult("testReset", testReset());
-	printTestResult("testnumPiecesInCol", testnumPiecesInCol());
-
-
+	printTestResult("NextEmptyRow test", testnextEmptyRow());
+	printTestResult("GetSet test", testGetSet());
+	printTestResult("IsFullColumn test", testIsFullColumn());
+	printTestResult("Reset test", testReset());
+	printTestResult("NumPiecesInCol test", testnumPiecesInCol());
 }
