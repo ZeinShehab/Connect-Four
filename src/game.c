@@ -1,5 +1,6 @@
 #include "../include/game.h"
 #include "../include/board.h"
+#include "../include/console.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
@@ -179,15 +180,6 @@ void winIfWinner(int player)
 	}
 }
 
-
-/*
-* Clears the console and resets the cursor to (0,0)
-*/
-void clrscr()
-{
-	system("@cls||clear");
-}
-
 /*
 * Plays out a single game cycle for given player
 */
@@ -231,14 +223,12 @@ void run()
 		totalPieces++;
 
 		int tieWinner = checkTie(totalPieces, playerOneTime, playerTwoTime);
-		printf("Tie winner: %d\n", tieWinner);
 		winIfWinner(tieWinner);
 
 		playerTurn(2, board, &playerTwoTime);
 		totalPieces++;
 
 		tieWinner = checkTie(totalPieces, playerOneTime, playerTwoTime);
-		printf("Tie winner: %d\n", tieWinner);
 		winIfWinner(tieWinner);
 	}
 }
