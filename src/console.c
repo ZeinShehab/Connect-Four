@@ -78,11 +78,19 @@ int consoleHeight()
 	return rows;
 }
 
-void centerLine(int lineLength)
+void centerline(int lineLength)
 {
 	int spaces = (consoleWidth() / 2) - (lineLength / 2);
 	for (int k = 0; k < spaces; k++) {
 		printf(" ");
+	}
+}
+
+void centerTextVer(int textLength)
+{
+	int newlines = (consoleHeight() / 2) - (textLength / 2);
+	for (int k = 0; k < newlines; k++) {
+		printf("\n");
 	}
 }
 

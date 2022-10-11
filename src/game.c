@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include <string.h>
 
 /*
 * A valid move is a move that is within bounds of the board
@@ -43,8 +44,15 @@ int getPlayerMove(int player, int* board)
 	int invalidCounter = 0;
 	while (!isValidMove(move - 1, board)) {
 		if (invalidCounter >= 1) {
-			printf("Invalid move. Try again. ");
+			clrscr();
+			show(board);
+
+			if (CENTER_HOZ) {
+				centerline(strlen("Invalid move. Try again."));
+			}
+			printf("Invalid move. Try again.\n");
 		}
+		centerline(strlen("Player 1 move: ") + 1);
 		printf("Player %d move: ", player);
 		scanf_s("%d", &move);
 		invalidCounter++;
@@ -175,7 +183,8 @@ int checkTie(int totalPieces, int playerOneTime, int playerTwoTime)
 void winIfWinner(int player)
 {
 	if (player != 0) {
-		printf("Player %d wins", player);
+		centerline(strlen("Player 1 wins"));
+		printf("Player %d wins\n\n", player);
 		exit(0);
 	}
 }

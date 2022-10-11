@@ -32,6 +32,9 @@ void reset(int* board)
 */
 void hozLine()
 {
+	if (CENTER_HOZ) {
+		centerline(BOARD_WIDTH * 3);
+	}
 	for (int i = 0; i < BOARD_WIDTH * 3; i++) {
 		printBlue("-");
 	}
@@ -40,8 +43,16 @@ void hozLine()
 
 void show(int* board)
 {
+	if (CENTER_VER) {
+		centerTextVer(14);
+	}
+
 	hozLine();
 	for (int i = 0; i < BOARD_HEIGHT-1; i++) {
+		if (CENTER_HOZ) {
+			centerline(BOARD_WIDTH * 3);
+		}
+
 		for (int j = 0; j < BOARD_WIDTH; j++) {
 			int value = get(i, j, board);
 
@@ -66,6 +77,9 @@ void show(int* board)
 	hozLine();
 
 	// -- FOR DEBUGGING REMOVE LATER -- //
+	if (CENTER_HOZ) {
+		centerline(BOARD_WIDTH * 3);
+	}
 	for (int i = 0; i < BOARD_WIDTH; i++) {
 		printf("|%d|", get(BOARD_HEIGHT - 1, i, board));
 	}

@@ -20,6 +20,8 @@ int consoleWidth();
 
 int consoleHeight();
 
-void centerLine(int textLength);
+void centerline(int lineLength);
+
+void centerTextVer(int textLength);
 
 void clrscr();
