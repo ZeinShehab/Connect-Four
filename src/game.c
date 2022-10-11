@@ -67,20 +67,11 @@ int getPlayerMove(int player, int* board)
 */
 int checkWin(int row, int col, int player, int* board)
 {
-	// check how we will search
-	// left or right
-	// diagonal left up or down
-	// diagonal right up or down
-	// down
-<<<<<<< HEAD
-	//search right
-=======
-	//search rightt
->>>>>>> 2a621e2b1fb812a89bea77a722c8fc06b93429a9
+
 	int count = 0;
 	if (col <= BOARD_WIDTH - 4) {
 		for (int i = col; i < BOARD_WIDTH; i++) { // search right
-			if (board[7 * row + i] == player)
+			if (get(row, i, board) == player)
 				count += 1;
 			else
 				count = 0;
@@ -90,12 +81,12 @@ int checkWin(int row, int col, int player, int* board)
 		count = 0;
 	}
 	if (row <= BOARD_HEIGHT - 1 - 4) {
-		for (int i = row + 1; i < BOARD_HEIGHT - 1; i++) {// search down 
-			if (board[7 * i + col] == player)
+		for (int i = row; i < BOARD_HEIGHT - 1; i++) {// search down 
+			if (get(i, col, board) == player)
 				count += 1;
 			else
 				count = 0;
-			if (count == 3)
+			if (count == 4)
 				return player;
 		}
 
@@ -103,7 +94,7 @@ int checkWin(int row, int col, int player, int* board)
 
 	if (col >= BOARD_WIDTH - 4) {
 		for (int i = col; i >= 0; i--) { // search left
-			if (board[7 * row + i] == player)
+			if (get(row, i, board) == player)
 				count += 1;
 			else
 				count = 0;
@@ -112,28 +103,28 @@ int checkWin(int row, int col, int player, int* board)
 		}
 	}
 	if (row >= BOARD_HEIGHT - 1 - 4 && col < BOARD_WIDTH - 4) {
-		int level = 1;
+		int level = 0;
 		count = 0;
-		for (int i = row - 1; i >= 0; i--) { // search diagonally up and to the right
-			if (player == board[7 * i + col + level])
+		for (int i = row; i >= 0; i--) { // search diagonally UP and to the right
+			if (player == get(i, col + level, board))
 				count += 1;
 			else
 				count = 0;
-			if (count == 3)
+			if (count == 4)
 				return player;
 			level += 1;
 		}
 
 	}
 	if (row >= BOARD_HEIGHT - 1 - 4 && col >= BOARD_WIDTH - 4) {
-		int level = 1;
+		int level = 0;
 		count = 0;
-		for (int i = row - 1; i >= 0; i--) { // search diagonally up and to the left
-			if (player == board[7 * i + col - level])
+		for (int i = row; i >= 0; i--) { // search diagonally UP and to the left
+			if (player == get(i, col - level, board))
 				count += 1;
 			else
 				count = 0;
-			if (count == 3)
+			if (count == 4)
 				return player;
 			level += 1;
 		}
@@ -141,14 +132,14 @@ int checkWin(int row, int col, int player, int* board)
 	}
 	if (row <= BOARD_HEIGHT - 1 - 4 && col >= BOARD_WIDTH - 4) {
 
-		int level = 1;
+		int level = 0;
 		count = 0;
-		for (int i = row + 1; i < BOARD_HEIGHT - 1; i++) { // search diagonally DOWN and to the left
-			if (player == board[7 * i + col - level])
+		for (int i = row; i < BOARD_HEIGHT - 1; i++) { // search diagonally DOWN and to the leftt
+			if (player == get(i, col - level, board))
 				count += 1;
 			else
 				count = 0;
-			if (count == 3)
+			if (count == 4)
 				return player;
 			level += 1;
 		}
@@ -156,18 +147,17 @@ int checkWin(int row, int col, int player, int* board)
 	}
 	if (row <= BOARD_HEIGHT - 1 - 4 && col <= BOARD_WIDTH - 4) {
 
-		int level = 1;
+		int level = 0;
 		count = 0;
-		for (int i = row + 1; i < BOARD_HEIGHT - 1; i++) { // search diagonally DOWN and to the right
-			if (player == board[7 * i + col + level])
+		for (int i = row; i < BOARD_HEIGHT - 1; i++) { // search diagonally DOWN and to the right
+			if (player == get(i, col + level, board))
 				count += 1;
 			else
 				count = 0;
-			if (count == 3)
+			if (count == 4)
 				return player;
 			level += 1;
 		}
-<<<<<<< HEAD
 
 	}
 
@@ -176,9 +166,6 @@ int checkWin(int row, int col, int player, int* board)
 
 
 
-=======
-	}
->>>>>>> 2a621e2b1fb812a89bea77a722c8fc06b93429a9
 	return 0;
 }
 /*
