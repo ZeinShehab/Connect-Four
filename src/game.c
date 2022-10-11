@@ -2,6 +2,7 @@
 #include "../include/board.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
 
 /*
 * A valid move is a move that is within bounds of the board
@@ -153,16 +154,20 @@ int checkWin(int row, int col, int player, int* board)
 				return player;
 			level += 1;
 		}
-
 	}
-
-
-
-
-
-
 	return 0;
 }
+
+/*
+* Checks if the board is full. A tie is declared if the board is full and no player has won.
+* Returns 0 if there is no tie otherwise the number of player who wins by time.
+*/
+int checkTie(int totalPieces, int playerOneTime, int playerTwoTime)
+{
+	int tie = (totalPieces == BOARD_WIDTH * (BOARD_HEIGHT - 1));			// if board is full then we have a tie
+	return tie * (playerOneTime < playerTwoTime ? 1 : 2);					// if there is no tie the tieWinner will be 0 and there will be no winner otherwise the winner is selected
+}
+
 /*
 * If player is 0 no winner is declared otherwise the player number given is declared as winner and the game quits.
 */
@@ -173,6 +178,7 @@ void winIfWinner(int player)
 		exit(0);
 	}
 }
+
 
 /*
 * Clears the console and resets the cursor to (0,0)
@@ -185,9 +191,14 @@ void clrscr()
 /*
 * Plays out a single game cycle for given player
 */
-void playerTurn(int player, int* board)
+void playerTurn(int player, int* board, int *playerTime)
 {
-	int col = getPlayerMove(player, board);  // time this to know how much time player took.
+	clock_t start = clock(), diff;
+	int col = getPlayerMove(player, board);									// time this to know how much time player took to make a move.
+	diff = clock() - start;
+	int msec = diff * 1000 / CLOCKS_PER_SEC;
+	*playerTime += msec;
+
 	int row = nextEmptyRow(col, board);
 	makeMove(row, col, player, board);
 
@@ -209,9 +220,25 @@ void run()
 	clrscr();
 	show(board);
 
+	int totalPieces = 0;
+
+	int playerOneTime = 0;
+	int playerTwoTime = 0;
+
 	int quit = 0;
 	while (!quit) {
-		playerTurn(1, board);
-		playerTurn(2, board);
+		playerTurn(1, board, &playerOneTime);
+		totalPieces++;
+
+		int tieWinner = checkTie(totalPieces, playerOneTime, playerTwoTime);
+		printf("Tie winner: %d\n", tieWinner);
+		winIfWinner(tieWinner);
+
+		playerTurn(2, board, &playerTwoTime);
+		totalPieces++;
+
+		tieWinner = checkTie(totalPieces, playerOneTime, playerTwoTime);
+		printf("Tie winner: %d\n", tieWinner);
+		winIfWinner(tieWinner);
 	}
 }
