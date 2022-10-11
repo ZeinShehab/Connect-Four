@@ -39,6 +39,9 @@
     <ClCompile Include="tests\tests.c">
       <Filter>Source Files\Tests</Filter>
     </ClCompile>
+    <ClCompile Include="src\console.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\board.h">
@@ -55,6 +58,9 @@
     </ClInclude>
     <ClInclude Include="tests\tests.h">
       <Filter>Header Files\Tests</Filter>
+    </ClInclude>
+    <ClInclude Include="include\console.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
