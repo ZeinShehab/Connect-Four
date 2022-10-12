@@ -64,33 +64,33 @@ int testCheckWin() {
 	*Diagonal Test: 
 	* 3 CASES: 
 	* 1. the winning Move (W = 1) is on the upper edge of the diagonal line. (passed)
-			|0||0||0||0||0||0||0|
+	    |0||0||0||0||0||0||0|
             |0||0||0||0||0||0||0|
             |0||0||0||w||0||0||0|
             |0||0||1||2||0||0||0|
             |0||1||2||1||0||0||0|
             |1||2||1||2||0||0||0|
 	* 2. The winning Move is on the Lower edge of the diagonal line. (Passed)
-			|0||0||0||0||0||0||0|
+	    |0||0||0||0||0||0||0|
             |0||0||0||0||0||0||0|
             |0||0||0||1||0||0||0|
             |0||0||1||2||0||0||0|
             |0||1||2||1||0||0||0|
             |w||2||1||2||0||0||0|
 	* 3. The winning Move is in the middle of the diagonal line. (Failed)
-			|0||0||0||0||0||0||0|
+	    |0||0||0||0||0||0||0|
             |0||0||0||0||0||0||0|
             |0||0||0||1||0||0||0|
             |0||0||w||2||0||0||0|
             |0||1||2||1||0||0||0|
             |1||2||1||2||0||0||0|
 			OR
-			|0||0||0||0||0||0||0|
-			|0||0||0||0||0||0||0|
-			|0||0||0||1||0||0||0|
-			|0||0||1||2||0||0||0|
-			|0||w||2||1||0||0||0|
-			|1||2||1||2||0||0||0|
+	|0||0||0||0||0||0||0|
+	|0||0||0||0||0||0||0|
+	|0||0||0||1||0||0||0|
+	|0||0||1||2||0||0||0|
+	|0||w||2||1||0||0||0|
+	|1||2||1||2||0||0||0|
 	*/
 	reset(board);
 	set(5, 0, 1, board);
@@ -128,7 +128,7 @@ int testCheckWin() {
             |0||4||0||0||0||0||0|
             ---------------------
 	* 2. The winning Move is on the Lower edge of the vertical line. (failed)
-			|0||0||0||0||0||0||0|
+	    |0||0||0||0||0||0||0|
             |0||0||0||0||0||0||0|
             |0||1||0||0||0||0||0|
             |0||1||0||0||0||0||0|
@@ -138,7 +138,7 @@ int testCheckWin() {
             |0||4||0||0||0||0||0|
             ---------------------
 	* 3. The winning Move is in the middle of the vertical line. (Failed)
-			|0||0||0||0||0||0||0|
+	    |0||0||0||0||0||0||0|
             |0||0||0||0||0||0||0|
             |0||1||0||0||0||0||0|
             |0||1||0||0||0||0||0|
@@ -148,15 +148,15 @@ int testCheckWin() {
             |0||4||0||0||0||0||0|
             ---------------------
 			OR
-			|0||0||0||0||0||0||0|
-			|0||0||0||0||0||0||0|
-			|0||1||0||0||0||0||0|
-			|0||w||0||0||0||0||0|
-			|0||1||0||0||0||0||0|
-			|0||1||0||0||0||0||0|
-			---------------------
-			|0||4||0||0||0||0||0|
-			---------------------
+	|0||0||0||0||0||0||0|
+	|0||0||0||0||0||0||0|
+	|0||1||0||0||0||0||0|
+	|0||w||0||0||0||0||0|
+	|0||1||0||0||0||0||0|
+	|0||1||0||0||0||0||0|
+	---------------------
+	|0||4||0||0||0||0||0|
+	---------------------
 	*/
 	set(5, 1, 1, board);
 	set(4, 1, 1, board);
@@ -202,9 +202,9 @@ void TestCheckWin() {
 /*
 *Test Function for CheckTie(): 
 * TEST CASES: 
-* CASE 1: when the board is full and playerOneTime is less than PlayerTwoTime. (Expected: 1)
-* CASE 2: Whenthe board is full and playerOneTime is greater than PlayerTwoTime. (Expected: 2)
-* CASE 3: When the board is not full. (Expected 0)
+* CASE 1: when the board is full and playerOneTime is less than PlayerTwoTime. (Expected: 1) (passed)
+* CASE 2: Whenthe board is full and playerOneTime is greater than PlayerTwoTime. (Expected: 2) (passed)
+* CASE 3: When the board is not full. (Expected 0) (passed)
 */
 int testCheckTie() {
 	//CASE 1: 
