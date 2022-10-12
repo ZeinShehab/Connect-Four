@@ -36,9 +36,6 @@ int testGetPlayerMove() {
 }
 
 
-
-
-
 //Auxiliry test Function.
 int testCheckWin() {
 	int board[BOARD_HEIGHT * BOARD_WIDTH];
@@ -64,33 +61,33 @@ int testCheckWin() {
 	*Diagonal Test: 
 	* 3 CASES: 
 	* 1. the winning Move (W = 1) is on the upper edge of the diagonal line. (passed)
-	    |0||0||0||0||0||0||0|
-            |0||0||0||0||0||0||0|
-            |0||0||0||w||0||0||0|
-            |0||0||1||2||0||0||0|
-            |0||1||2||1||0||0||0|
-            |1||2||1||2||0||0||0|
+|0||0||0||0||0||0||0|
+|0||0||0||0||0||0||0|
+|0||0||0||w||0||0||0|
+|0||0||1||2||0||0||0|
+|0||1||2||1||0||0||0|
+|1||2||1||2||0||0||0|
 	* 2. The winning Move is on the Lower edge of the diagonal line. (Passed)
-	    |0||0||0||0||0||0||0|
-            |0||0||0||0||0||0||0|
-            |0||0||0||1||0||0||0|
-            |0||0||1||2||0||0||0|
-            |0||1||2||1||0||0||0|
-            |w||2||1||2||0||0||0|
+|0||0||0||0||0||0||0|
+|0||0||0||0||0||0||0|
+|0||0||0||1||0||0||0|
+|0||0||1||2||0||0||0|
+|0||1||2||1||0||0||0|
+|w||2||1||2||0||0||0|
 	* 3. The winning Move is in the middle of the diagonal line. (Failed)
-	    |0||0||0||0||0||0||0|
-            |0||0||0||0||0||0||0|
-            |0||0||0||1||0||0||0|
-            |0||0||w||2||0||0||0|
-            |0||1||2||1||0||0||0|
-            |1||2||1||2||0||0||0|
+|0||0||0||0||0||0||0|
+|0||0||0||0||0||0||0|
+|0||0||0||1||0||0||0|
+|0||0||w||2||0||0||0|
+|0||1||2||1||0||0||0|
+|1||2||1||2||0||0||0|
 			OR
-	|0||0||0||0||0||0||0|
-	|0||0||0||0||0||0||0|
-	|0||0||0||1||0||0||0|
-	|0||0||1||2||0||0||0|
-	|0||w||2||1||0||0||0|
-	|1||2||1||2||0||0||0|
+|0||0||0||0||0||0||0|
+|0||0||0||0||0||0||0|
+|0||0||0||1||0||0||0|
+|0||0||1||2||0||0||0|
+|0||w||2||1||0||0||0|
+|1||2||1||2||0||0||0|
 	*/
 	reset(board);
 	set(5, 0, 1, board);
@@ -118,45 +115,45 @@ int testCheckWin() {
 	*Vertical Line Test:
 	* 3 CASES:
 	* 1. the winning Move (W = 1) is on the upper edge of the vertical line. (failed)
-			|0||0||0||0||0||0||0|
-            |0||0||0||0||0||0||0|
-            |0||w||0||0||0||0||0|
-            |0||1||0||0||0||0||0|
-            |0||1||0||0||0||0||0|
-            |0||1||0||0||0||0||0|
-            ---------------------
-            |0||4||0||0||0||0||0|
-            ---------------------
+|0||0||0||0||0||0||0|
+|0||0||0||0||0||0||0|
+|0||w||0||0||0||0||0|
+|0||1||0||0||0||0||0|
+|0||1||0||0||0||0||0|
+|0||1||0||0||0||0||0|
+---------------------
+|0||4||0||0||0||0||0|
+---------------------
 	* 2. The winning Move is on the Lower edge of the vertical line. (failed)
-	    |0||0||0||0||0||0||0|
-            |0||0||0||0||0||0||0|
-            |0||1||0||0||0||0||0|
-            |0||1||0||0||0||0||0|
-            |0||1||0||0||0||0||0|
-            |0||w||0||0||0||0||0|
-            ---------------------
-            |0||4||0||0||0||0||0|
-            ---------------------
+|0||0||0||0||0||0||0|
+|0||0||0||0||0||0||0|
+|0||1||0||0||0||0||0|
+|0||1||0||0||0||0||0|
+|0||1||0||0||0||0||0|
+|0||w||0||0||0||0||0|
+---------------------
+|0||4||0||0||0||0||0|
+---------------------
 	* 3. The winning Move is in the middle of the vertical line. (Failed)
-	    |0||0||0||0||0||0||0|
-            |0||0||0||0||0||0||0|
-            |0||1||0||0||0||0||0|
-            |0||1||0||0||0||0||0|
-            |0||w||0||0||0||0||0|
-            |0||1||0||0||0||0||0|
-            ---------------------
-            |0||4||0||0||0||0||0|
-            ---------------------
+|0||0||0||0||0||0||0|
+|0||0||0||0||0||0||0|
+|0||1||0||0||0||0||0|
+|0||1||0||0||0||0||0|
+|0||w||0||0||0||0||0|
+|0||1||0||0||0||0||0|
+---------------------
+|0||4||0||0||0||0||0|
+---------------------
 			OR
-	|0||0||0||0||0||0||0|
-	|0||0||0||0||0||0||0|
-	|0||1||0||0||0||0||0|
-	|0||w||0||0||0||0||0|
-	|0||1||0||0||0||0||0|
-	|0||1||0||0||0||0||0|
-	---------------------
-	|0||4||0||0||0||0||0|
-	---------------------
+|0||0||0||0||0||0||0|
+|0||0||0||0||0||0||0|
+|0||1||0||0||0||0||0|
+|0||w||0||0||0||0||0|
+|0||1||0||0||0||0||0|
+|0||1||0||0||0||0||0|
+---------------------
+|0||4||0||0||0||0||0|
+---------------------
 	*/
 	set(5, 1, 1, board);
 	set(4, 1, 1, board);
@@ -199,13 +196,11 @@ void TestCheckWin() {
 }
 
 
-/*
-*Test Function for CheckTie(): 
-* TEST CASES: 
-* CASE 1: when the board is full and playerOneTime is less than PlayerTwoTime. (Expected: 1) (passed)
-* CASE 2: Whenthe board is full and playerOneTime is greater than PlayerTwoTime. (Expected: 2) (passed)
-* CASE 3: When the board is not full. (Expected 0) (passed)
-*/
+
+
+
+
+//Auxiliry function
 int testCheckTie() {
 	//CASE 1: 
 	if ((checkTie(7 * 6, 2, 4)) != 1) {
@@ -225,6 +220,30 @@ int testCheckTie() {
 	
 	return 0; 
 }
+/*
+* AUTOMATICALLY TESTED!
+*Test Function for CheckTie():
+* TEST CASES:
+* CASE 1: when the board is full and playerOneTime is less than PlayerTwoTime. (Expected: 1) (passed)
+* CASE 2: Whenthe board is full and playerOneTime is greater than PlayerTwoTime. (Expected: 2) (passed)
+* CASE 3: When the board is not full. (Expected 0) (passed)
+*/
+
+void TestCheckTie() {
+	int result = testCheckTie();
+	if (result == 1) {
+		printf("TestCheckTie Case 1 Failed. \n");
+	}
+	else if (result == 2) {
+		printf("TestCheckTie Case 2 Failed. \n");
+	}
+	else if (result == 3) {
+		printf("TestCheckTie Case 3 failed. \n");
+	}
+	else {
+		printf("TestCheckTie Tests passed. \n");
+	}
+}
 
 
 /*
@@ -235,9 +254,8 @@ int testCheckTie() {
 * CASE 3: when the value is 0. (Expected: No Action) (Passed)
 * CASE 4: when the value is 3  (Expected: No Action) (Passed)
 */
-/*
-int testWinIfWinner() {
-	
+ //int testWinIfWinner() {
+	 /*
 	//CASE 1:
 	winIfWinner(1);
 	//CASE 2:
@@ -267,16 +285,12 @@ void testRun() {
 
 void runGameTests()
 {
-	//testGetPlayerMove(); 
+	//testGetPlayerMove(); MANUALLY TESTED
 	TestCheckWin();
-	//printf("returned: %d", testCheckTie());
-	//testWinIfWinner();
-	/*
-	int t = 2;
-	printf("you took %d units of time. ", 2);
-	playerTurn(1, 2, &t);
-	printf("you took %d units of time. ", 2);
-	*/
+	TestCheckTie();
+	//testWinIfWinner(); MANUALLY TESTED
+	//testRun();	MANUALLY TESTED
+	
 
 
 }
