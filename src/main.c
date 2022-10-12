@@ -5,7 +5,7 @@
 
 int main() {
 	runTests(); // Run tests
-	//run();  // Run main game loop
+	run();  // Run main game loop
 	
    return "pause";
 }
