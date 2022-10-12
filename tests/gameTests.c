@@ -18,8 +18,7 @@
 * CASE 2: when the user Enters 8. (Expected: try again) (passed)
 * CASE 3: when the user Enters 7. (Expected: update board) (passed)
 * CASE 4: when the user Enters 1. (Expected: update board) (passed)
-* CASE 5: when the user Enters -1.(Expected: try again) (passed).  						-1			0			8			100			-2			 5
-* Expected Varified Restult: try again		try again	try again	try again	try again	Update Table
+* CASE 5: when the user Enters -1.(Expected: try again) (passed).
 */
 int testGetPlayerMove() {
 	int board[BOARD_HEIGHT * BOARD_WIDTH];
@@ -37,16 +36,10 @@ int testGetPlayerMove() {
 }
 
 
-/*
-* Checks the given board for any 4 consecutive pieces in any direction.
-* Will return 0 if there is no winner otherwise it returns the number of the player who won.
-* int checkWin(int row, int col, int player, int* board)
-*/
 
-/*
-*Test Function for checkWin function. 
-* 
-*/
+
+
+//Auxiliry test Function.
 int testCheckWin() {
 	int board[BOARD_HEIGHT * BOARD_WIDTH];
 	reset(board);
@@ -56,9 +49,16 @@ int testCheckWin() {
 	set(1, 2, 1, board);
 	set(1, 3, 1, board);
 	set(1, 4, 1, board);
+
+	for (int i = 1; i < 5; i++) {
+
+		if ((checkWin(i, 1, 1, board) != 1)) {
+			return 1;
+		}
+	}
 	
-	show(board);
-	printf("The Wincheck returns: %d", checkWin(1, 3, 1, board));
+
+	//show(board);
 
 	/*
 	*Diagonal Test: 
@@ -104,9 +104,15 @@ int testCheckWin() {
 	set(3, 3, 2, board);
 	set(2, 3, 1, board);
 
-	show(board);
-	printf("The Wincheck returns: %d", checkWin(3, 2, 1, board));
+	for (int i = 2, j = 3; i < 6 && j >= 0; i++, j--) {
+		if (checkWin(i, j, 1, board) != 1) {
+			return 2;
+		}
+	}
+
+	//show(board);
 	reset(board); 
+	
 
 	/*
 	*Vertical Line Test:
@@ -158,10 +164,39 @@ int testCheckWin() {
 	set(2, 1, 1, board);
 	set(6, 1, 4, board);
 	show(board);
-	printf("The Wincheck returns: %d", checkWin(3, 1, 1, board));
+	for (int i = 2; i < 6; i++) {
+		
+		if ((checkWin(i, 1, 1, board) != 1)) {
+			return 3; 
+		}
+	}
 
 }
 
+
+/*
+* AUTOMATICALLY TESTED! 
+*TEST function for checkwin():
+* TEST CASES:
+* CASE 1: Checks all four nodes of Horizonal line individually. (*---)(-*--)(--*-)(---*)
+* CASE 2: checks all four nodes of diagonal line individually.
+* CASE 3: checks all four nodes of vertical line individually. 
+*
+*/
+void TestCheckWin() {
+	int result = testCheckWin();
+	if (result == 1) {
+		printf("Horizontal Line test Failed. \n");
+	}else if (result == 2) {
+		printf("Diagonal Line test Failed. \n");
+	}
+	else if (result == 3) {
+		printf("Vertical Line test failed. \n");
+	}
+	else {
+		printf("CheckWin Tests passed. \n");
+	}
+}
 
 
 /*
@@ -233,7 +268,7 @@ void testRun() {
 void runGameTests()
 {
 	//testGetPlayerMove(); 
-	//testCheckWin();
+	TestCheckWin();
 	//printf("returned: %d", testCheckTie());
 	//testWinIfWinner();
 	/*
