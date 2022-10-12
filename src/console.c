@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <windows.h>
 #include "../include/console.h"
 
@@ -100,4 +101,24 @@ void centerTextVer(int textLength)
 void clrscr()
 {
 	system("@cls||clear");
+}
+
+/*
+* Reads an entire line of input. 
+* If given input is not a digit -1 is returned to indicate an invalid move otherwise we return the digit.
+*/
+int getdigit()
+{
+	char buffer[BUFFER_SIZE];
+	fgets(buffer, BUFFER_SIZE, stdin);
+
+	// We expect a single digit so any input longer than that is invalid
+	int len = 0;
+	while (buffer[len] != '\n') {
+		len++;
+		if (len != 1) {
+			return -1;
+		}
+	}
+	return isdigit(buffer[0]) ? atoi(buffer) : -1;
 }

@@ -20,7 +20,6 @@ int getPlayerMove(int player, int* board);
 */
 int checkWin(int row, int col, int player, int* board);
 
-
 /*
 * Runs the main game loop.
 */

@@ -54,7 +54,9 @@ int getPlayerMove(int player, int* board)
 		}
 		centerline(strlen("Player 1 move: ") + 1);
 		printf("Player %d move: ", player);
-		scanf_s("%d", &move);
+
+		move = getdigit();
+
 		invalidCounter++;
 	}
 	// user input is 1 indexed so it returns 0 indexed column
