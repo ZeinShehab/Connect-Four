@@ -5,7 +5,7 @@
 
 void runTests()
 {
-	runBoardTests();
+	//runBoardTests();
 	runGameTests();
 }
 
