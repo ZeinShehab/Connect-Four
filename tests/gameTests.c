@@ -74,12 +74,6 @@ int testmakeMove()
 	return 0;
 }
 
-int testgetPlayerMove()
-{
-
-}
-
-
 void runGameTests()
 {
 	printTestResult("isValidMove test", testisValidMove());
