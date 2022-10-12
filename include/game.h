@@ -21,11 +21,6 @@ int getPlayerMove(int player, int* board);
 int checkWin(int row, int col, int player, int* board);
 
 /*
-* Ends the game and declares a winner if given player is a winner.
-*/
-void winIfWinner(int player);
-
-/*
 * Runs the main game loop.
 */
 void run();
