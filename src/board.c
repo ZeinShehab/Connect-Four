@@ -41,6 +41,9 @@ void hozLine()
 	printf("\n");
 }
 
+/*
+* Prints out the game board to the screen.
+*/
 void show(int* board)
 {
 	if (CENTER_VER) {
@@ -76,16 +79,16 @@ void show(int* board)
 	}
 	hozLine();
 
-	// -- FOR DEBUGGING REMOVE LATER -- //
-	if (CENTER_HOZ) {
-		centerline(BOARD_WIDTH * 3);
-	}
-	for (int i = 0; i < BOARD_WIDTH; i++) {
-		printf("|%d|", get(BOARD_HEIGHT - 1, i, board));
-	}
-	printf("\n");
-	hozLine();
-	// -- FOR DEBUGGING REMOVE LATER -- //
+	//// -- FOR DEBUGGING REMOVE LATER -- //
+	//if (CENTER_HOZ) {
+	//	centerline(BOARD_WIDTH * 3);
+	//}
+	//for (int i = 0; i < BOARD_WIDTH; i++) {
+	//	printf("|%d|", get(BOARD_HEIGHT - 1, i, board));
+	//}
+	//printf("\n");
+	//hozLine();
+	//// -- FOR DEBUGGING REMOVE LATER -- //
 }
 
 /*

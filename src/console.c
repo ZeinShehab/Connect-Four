@@ -1,7 +1,11 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <windows.h>
 #include "../include/console.h"
 
+/*
+* Resets the text color to the default console color.
+*/
 void resetColor()
 {
 	printf("\033[0m");
@@ -56,6 +60,9 @@ void printBlue(char* string)
 	resetColor();
 }
 
+/*
+* Retuns the width of the current console window. Works for resizable windows.
+*/
 int consoleWidth()
 {
 	CONSOLE_SCREEN_BUFFER_INFO csbi;
@@ -67,6 +74,9 @@ int consoleWidth()
 	return columns;
 }
 
+/*
+* Retuns the height of the current console window. Works for resizable windows.
+*/
 int consoleHeight()
 {
 	CONSOLE_SCREEN_BUFFER_INFO csbi;
@@ -78,6 +88,9 @@ int consoleHeight()
 	return rows;
 }
 
+/* Centers a line of text in the middle of the screen horizontally.
+* Spaces are added for padding based on the length of the line to be centered.
+*/
 void centerline(int lineLength)
 {
 	int spaces = (consoleWidth() / 2) - (lineLength / 2);
@@ -86,6 +99,10 @@ void centerline(int lineLength)
 	}
 }
 
+/*
+* Centers text in the middle of the screen vertically.
+* Newlines are added for padding based on the height of the text to be centered.
+*/
 void centerTextVer(int textLength)
 {
 	int newlines = (consoleHeight() / 2) - (textLength / 2);
@@ -100,4 +117,40 @@ void centerTextVer(int textLength)
 void clrscr()
 {
 	system("@cls||clear");
+}
+
+/*
+* Reads an entire line of input. 
+* If given input is not a digit -1 is returned to indicate an invalid move otherwise we return the digit.
+*/
+int getdigit()
+{
+	char buffer[BUFFER_SIZE];
+	fgets(buffer, BUFFER_SIZE, stdin);
+
+	// We expect a single digit so any input longer than that is invalid
+	int len = 0;
+	while (buffer[len] != '\n') {
+		len++;
+		if (len != 1) {
+			return -1;
+		}
+	}
+	return isdigit(buffer[0]) ? atoi(buffer) : -1;
+}
+
+/*
+* Hides the cursor on the console.
+*/
+void hidecursor()
+{
+	printf("\33[?25l");
+}
+
+/*
+* Shows the cursor on the console.
+*/
+void showcursor()
+{
+	printf("\33[?25h");
 }

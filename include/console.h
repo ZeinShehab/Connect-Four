@@ -1,5 +1,7 @@
 #pragma once
 
+#define BUFFER_SIZE 15								// large enough buffer to prevent input from one player going to another player
+
 void resetColor();
 
 void printRed(char *string);
@@ -25,3 +27,9 @@ void centerline(int lineLength);
 void centerTextVer(int textLength);
 
 void clrscr();
+
+int getdigit();
+
+void hidecursor();
+
+void showcursor();

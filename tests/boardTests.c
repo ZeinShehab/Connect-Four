@@ -176,6 +176,9 @@ int testnextEmptyRow()
 
 }
 
+/*
+* Runs all board tests and reports their results.
+*/
 void runBoardTests()
 {
 	printTestResult("NextEmptyRow test", testnextEmptyRow());
