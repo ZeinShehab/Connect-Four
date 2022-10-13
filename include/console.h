@@ -29,3 +29,7 @@ void centerTextVer(int textLength);
 void clrscr();
 
 int getdigit();
+
+void hidecursor();
+
+void showcursor();

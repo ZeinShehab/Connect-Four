@@ -53,9 +53,12 @@ int getPlayerMove(int player, int* board)
 			printf("Invalid move. Try again.\n");
 		}
 		centerline(strlen("Player 1 move: ") + 1);
-		printf("Player %d move: ", player);
 
+		// the cursor only needs to be visible on the screen when taking user input
+		showcursor();
+		printf("Player %d move: ", player);
 		move = getdigit();
+		hidecursor();
 
 		invalidCounter++;
 	}
@@ -170,15 +173,6 @@ int checkWin(int row, int col, int player, int* board)
 	}
 	if ((count + count_right) > 4)
 		return player;
-
-
-
-
-
-
-
-
-
 	return 0;
 }
 
