@@ -163,7 +163,6 @@ int testCheckWin() {
 	set(3, 2, 1, board);
 	set(2, 3, 2, board);
 	set(1, 4, 2, board);
-	show(board);
 		if ((checkWin(1, 4, 2, board) == 1)) {
 			return 4;
 		}
