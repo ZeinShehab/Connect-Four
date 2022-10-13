@@ -192,7 +192,7 @@ int checkTie(int totalPieces, int playerOneTime, int playerTwoTime)
 */
 void winIfWinner(int player)
 {
-	if (player != 0) {
+	if (player > 0 && player <= 2) {
 		centerline(strlen("Player 1 wins"));
 		printf("Player %d wins\n\n", player);
 		exit(0);
@@ -218,6 +218,7 @@ void playerTurn(int player, int* board, int *playerTime)
 
 	int winner = checkWin(row, col, player, board);
 	winIfWinner(winner);
+	printf("This is the end of the playerTurn Function: \n"); 
 }
 
 /*
