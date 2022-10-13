@@ -291,6 +291,4 @@ void runGameTests()
 	//testWinIfWinner(); MANUALLY TESTED
 	//testRun();	MANUALLY TESTED
 	
-
-
 }
