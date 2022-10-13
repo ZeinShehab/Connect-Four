@@ -3,12 +3,19 @@
 #include "boardTests.h"
 #include "../include/console.h"
 
+/*
+* Entry point for running tests.
+* Runs all tests and reports the results.
+*/
 void runTests()
 {
 	runBoardTests();
 	runGameTests();
 }
 
+/*
+* Helper function for reporting test results.
+*/
 void printTestResult(char* testName, int testResult)
 {
 	if (testResult != 0) {
