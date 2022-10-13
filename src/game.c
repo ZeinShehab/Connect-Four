@@ -67,115 +67,52 @@ int getPlayerMove(int player, int* board)
 }
 
 /*
-* Checks the given board for any 4 consecutive pieces in any direction.
+* Checks if the last move `player` made is a winning move or not.
 * Will return 0 if there is no winner otherwise it returns the number of the player who won.
 */
 int checkWin(int row, int col, int player, int* board)
 {
+	// 4 directions. Horizontal, Vertical, Left diagonal and right diagonal respectively.
+	int directions[4][2] = { {0, 1}, {1, 0}, {1, 1}, {1, -1} };
+	
+	for (int dir = 0; dir < 4; dir++) {
+		int* direction = directions[dir];
+		int x = 0;
+		int y = 0;
 
-	int count = 0;
-	int count_right = 0;
-	if (col < BOARD_WIDTH) {
-		for (int i = col; i < BOARD_WIDTH; i++) { // search right
-			if (get(row, i, board) == player)
-				count_right += 1;
-			else break;
-			if (count_right == 4)
-				return player;
+		// Left most position on the left diagonal that the piece falls on
+		if (dir == 2) {
+			x = col > row ? col - row : 0;
+			y = row > col ? row - col : 0;
+		} 
+		// Right most position on the right diagonal that the piece falls on
+		else if (dir == 3) {
+			x = col + row < BOARD_WIDTH - 1 ? col + row : BOARD_WIDTH - 1;
+			y = col + row < BOARD_WIDTH - 1 ? 0 : col + row - BOARD_WIDTH - 1;
 		}
-		count = 0;
-	}
-	if (row <= BOARD_HEIGHT - 1 - 4) {
-		for (int i = row; i < BOARD_HEIGHT - 1; i++) {// search down 
-			if (get(i, col, board) == player)
-				count += 1;
-			else break;
-			if (count == 4)
-				return player;
-		}
-
-	}
-	count = 0;
-
-	if (col > 0) {
-		for (int i = col; i >= 0; i--) { // search left
-			if (get(row, i, board) == player)
-				count += 1;
-			else
-				break;
-			if (count == 4)
-				return player;
-		}
-	}
-	if ((count + count_right) > 4)
-		return player;
-	count_right = 0;
-	count = 0;
-	if (row < BOARD_HEIGHT - 1 && col < BOARD_WIDTH) {
-		int level = 0;
-		for (int i = row; i >= 0; i--) { // search diagonally UP and to the right
-			if (player == get(i, col + level, board))
-				count_right += 1;
-			else
-				break;
-			if (count_right == 4)
-				return player;
-			level += 1;
+		// Left most position on the horizontal or topmost position on the vertical. Depending on the direction.
+		// If we are iterating over the horizontal then the x would be 0 and y would be the row of the last move.
+		else {
+			x = col * direction[0];
+			y = row * direction[1];
 		}
 
-	}
-	if (row <= BOARD_HEIGHT - 1 && col > 0) {
+		// Iterate through the whole line in current direction and look for 4 consecutive pieces. 
+		// Maximum length of a line is 7 so we are at most iterating over 3 extra pieces only.
+		int n_pieces = 0;
+		while (x < BOARD_WIDTH && x >= 0 && y < BOARD_HEIGHT - 1 && y >= 0) {
+			n_pieces = get(y, x, board) == player ? n_pieces + 1 : 0;		// If different piece is found reset counter else increment by 1
 
-		int level = 0;
+			y += direction[0];												// Move x and y in the current direction
+			x += direction[1];
 
-		for (int i = row; i < BOARD_HEIGHT - 1; i++) { // search diagonally DOWN and to the leftt
-			if (player == get(i, col - level, board))
-				count += 1;
-			else
-				break;
-			if (count == 4)
+			if (n_pieces >= 4) {											// If we have counted four pieces so far we have a winner
 				return player;
-			level += 1;
+			}
 		}
-
 	}
-	if ((count + count_right) > 4)
-		return player;
-	count = 0; count_right = 0;
-	if (row > 0 && col > 0) {
-		int level = 0;
-
-		for (int i = row; i >= 0; i--) { // search diagonally UP and to the left
-			if (player == get(i, col - level, board))
-				count += 1;
-			else
-				break;
-			if (count == 4)
-				return player;
-			level += 1;
-		}
-
-	}
-	if (row < BOARD_HEIGHT - 1 && col < BOARD_WIDTH) {
-
-		int level = 0;
-
-		for (int i = row; i < BOARD_HEIGHT - 1; i++) { // search diagonally DOWN and to the right
-			if (player == get(i, col + level, board))
-				count_right += 1;
-			else
-				break;
-			if (count_right == 4)
-				return player;
-			level += 1;
-		}
-
-	}
-	if ((count + count_right) > 4)
-		return player;
-	return 0;
+		return 0;
 }
-
 
 /*
 * Checks if the board is full. A tie is declared if the board is full and no player has won.
@@ -196,6 +133,20 @@ void winIfWinner(int player)
 		centerline(strlen("Player 1 wins"));
 		printf("Player %d wins\n\n", player);
 		exit(0);
+	}
+}
+
+/*
+* If player is 0 no winner is declared otherwise the player times along with the winner will be displayed.
+*/
+void winIfTie(int player, int playerOneTime, int playerTwoTime)
+{
+	if (player > 0 && player <= 2) {
+		centerline(strlen("Player 1 took: xxx seconds"));
+		printf("Player 1 took: %d seconds\n", playerOneTime / 1000);
+		centerline(strlen("Player 2 took: xxx seconds"));
+		printf("Player 2 took: %d seconds\n", playerTwoTime / 1000);
+		winIfWinner(player);
 	}
 }
 
@@ -242,12 +193,12 @@ void run()
 		totalPieces++;
 
 		int tieWinner = checkTie(totalPieces, playerOneTime, playerTwoTime);
-		winIfWinner(tieWinner);
+		winIfTie(tieWinner, playerOneTime, playerTwoTime);
 
 		playerTurn(2, board, &playerTwoTime);
 		totalPieces++;
 
 		tieWinner = checkTie(totalPieces, playerOneTime, playerTwoTime);
-		winIfWinner(tieWinner);
+		winIfTie(tieWinner, playerOneTime, playerTwoTime);
 	}
 }
