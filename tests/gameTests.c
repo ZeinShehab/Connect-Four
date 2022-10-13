@@ -21,19 +21,10 @@
 * CASE 4: when the user Enters 1. (Expected: update board) (passed)
 * CASE 5: when the user Enters -1.(Expected: try again) (passed).
 */
-int testGetPlayerMove() {
+void testGetPlayerMove() {
 	int board[BOARD_HEIGHT * BOARD_WIDTH];
 	reset(board);
 	getPlayerMove(1, board);
-	/*
-	* MANUALLY TESTED.
-	* CASE 1:.
-	* CASE 2:
-	* CASE 3:
-	* CASE 4:
-	* CASE 5:
-	*/
-	return 0; 
 }
 
 
@@ -50,7 +41,7 @@ int testCheckWin() {
 
 	for (int i = 1; i < 5; i++) {
 
-		if ((checkWin(i, 1, 1, board) != 1)) {
+		if ((checkWin(1, i, 1, board) != 1)) {
 			return 1;
 		}
 	}
@@ -161,14 +152,30 @@ int testCheckWin() {
 	set(3, 1, 1, board);
 	set(2, 1, 1, board);
 	set(6, 1, 4, board);
-	show(board);
-	for (int i = 2; i < 6; i++) {
-		
-		if ((checkWin(i, 1, 1, board) != 1)) {
+	
+		if ((checkWin(2, 1, 1, board) != 1)) {
 			return 3; 
 		}
-	}
 
+		reset(board);
+	set(5, 0, 2, board);
+	set(4, 1, 2, board);
+	set(3, 2, 1, board);
+	set(2, 3, 2, board);
+	set(1, 4, 2, board);
+	show(board);
+		if ((checkWin(1, 4, 2, board) == 1)) {
+			return 4;
+		}
+		reset(board);
+
+		set(5, 4, 2, board);
+		set(4, 4, 2, board);
+		set(3, 4, 1, board);
+		set(2, 3, 2, board);
+		set(1, 4, 2, board);
+
+	return 0;
 }
 
 
@@ -181,20 +188,7 @@ int testCheckWin() {
 * CASE 3: checks all four nodes of vertical line individually. 
 *
 */
-void TestCheckWin() {
-	int result = testCheckWin();
-	if (result == 1) {
-		printf("Horizontal Line test Failed. \n");
-	}else if (result == 2) {
-		printf("Diagonal Line test Failed. \n");
-	}
-	else if (result == 3) {
-		printf("Vertical Line test failed. \n");
-	}
-	else {
-		printf("CheckWin Tests passed. \n");
-	}
-}
+
 
 
 
@@ -228,46 +222,6 @@ int testCheckTie() {
 * CASE 1: when the board is full and playerOneTime is less than PlayerTwoTime. (Expected: 1) (passed)
 * CASE 2: Whenthe board is full and playerOneTime is greater than PlayerTwoTime. (Expected: 2) (passed)
 * CASE 3: When the board is not full. (Expected 0) (passed)
-*/
-
-void TestCheckTie() {
-	int result = testCheckTie();
-	if (result == 1) {
-		printf("TestCheckTie Case 1 Failed. \n");
-	}
-	else if (result == 2) {
-		printf("TestCheckTie Case 2 Failed. \n");
-	}
-	else if (result == 3) {
-		printf("TestCheckTie Case 3 failed. \n");
-	}
-	else {
-		printf("TestCheckTie Tests passed. \n");
-	}
-}
-
-
-/*
-* MANUALLY TESTED!
-* TEST function for winIFWinner(int player): 
-* CASE 1: When the value is 1. (Expected: 1 wins) (passed)
-* CASE 2: when the value is 2. (Expected: 2 wins) (passed)
-* CASE 3: when the value is 0. (Expected: No Action) (Passed)
-* CASE 4: when the value is 3  (Expected: No Action) (Passed)
-*/
- //int testWinIfWinner() {
-	 /*
-	//CASE 1:
-	winIfWinner(1);
-	//CASE 2:
-	winIfWinner(2);
-	//CASE 3:
-	winIfWinner(0);
-	//CASE 4:
-	winIfWinner(3);
-	return 0;
-	
-}
 */
 
 
@@ -357,11 +311,10 @@ int testmakeMove()
 
 void runGameTests()
 {
-	printTestResult("isValidMove test", testisValidMove());
-	printTestResult("makeMove test", testmakeMove());
-  //testGetPlayerMove(); MANUALLY TESTED
-	TestCheckWin();
-	TestCheckTie();
-	//testWinIfWinner(); MANUALLY TESTED
-	//testRun();	MANUALLY TESTED
+	printTestResult("IsValidMove test", testisValidMove());
+	printTestResult("MakeMove test", testmakeMove());
+	printTestResult("CheckTie test", testCheckTie());
+	printTestResult("CheckWin test", testCheckWin());
+	// testGetPlayerMove(); MANUALLY TESTED
+	// testRun();	MANUALLY TESTED
 }

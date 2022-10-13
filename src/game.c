@@ -218,7 +218,6 @@ void playerTurn(int player, int* board, int *playerTime)
 
 	int winner = checkWin(row, col, player, board);
 	winIfWinner(winner);
-	printf("This is the end of the playerTurn Function: \n"); 
 }
 
 /*
