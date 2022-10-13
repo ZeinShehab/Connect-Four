@@ -21,6 +21,11 @@ int getPlayerMove(int player, int* board);
 int checkWin(int row, int col, int player, int* board);
 
 /*
+* Checks if there is tie and decided the winner by time.
+*/
+int checkTie(int totalPieces, int playerOneTime, int playerTwoTime);
+
+/*
 * Runs the main game loop.
 */
 void run();
