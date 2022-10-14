@@ -86,8 +86,8 @@ int* checkWin(int row, int col, int player, int* board)
 
 		// Left most position on the left diagonal that the piece falls on
 		if (dir == 2) {
-			x = col > row ? col - row : 0;
-			y = row > col ? row - col : 0;
+			x = col >= row ? col - row : 0;
+			y = row >= col ? row - col : 0;
 		} 
 		// Right most position on the right diagonal that the piece falls on
 		else if (dir == 3) {
