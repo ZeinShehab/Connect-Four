@@ -1,11 +1,9 @@
-#include <stdio.h>
 #include "../include/game.h"
 #include "../tests/tests.h"
 
-
 int main() {
-	//runTests(); // Run tests
-	run();  // Run main game loop
+	// runTests(); // Run tests
+	runGame();  // Run main game loop
 	
    return 0;
 }
