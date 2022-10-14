@@ -86,13 +86,13 @@ int* checkWin(int row, int col, int player, int* board)
 
 		// Left most position on the left diagonal that the piece falls on
 		if (dir == 2) {
-			x = col > row ? col - row : 0;
-			y = row > col ? row - col : 0;
+			x = col >= row ? col - row : 0;
+			y = row >= col ? row - col : 0;
 		} 
 		// Right most position on the right diagonal that the piece falls on
 		else if (dir == 3) {
-			x = col + row < BOARD_WIDTH - 1 ? col + row : BOARD_WIDTH - 1;
-			y = col + row < BOARD_WIDTH - 1 ? 0 : col + row - BOARD_WIDTH - 1;
+			x = col + row <= BOARD_WIDTH - 1 ? col + row : BOARD_WIDTH - 1;
+			y = col + row <= BOARD_WIDTH - 1 ? 0 : col + row - BOARD_WIDTH - 1;
 		}
 		// Left most position on the horizontal or topmost position on the vertical. Depending on the direction.
 		// If we are iterating over the horizontal then the x would be 0 and y would be the row of the last move.
