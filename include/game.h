@@ -18,7 +18,7 @@ int getPlayerMove(int player, int* board);
 /*
 * Checks if any player has won in the current state of the board.
 */
-int checkWin(int row, int col, int player, int* board);
+int *checkWin(int row, int col, int player, int* board);
 
 /*
 * Checks if there is tie and decided the winner by time.

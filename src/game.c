@@ -71,9 +71,10 @@ int getPlayerMove(int player, int* board)
 
 /*
 * Checks if the last move `player` made is a winning move or not.
-* Will return 0 if there is no winner otherwise it returns the number of the player who won.
+* Will return NULL if there is no winner otherwise it will return an array containing the winning player 
+* along with information about the winning line so we can highlight it in green.
 */
-int checkWin(int row, int col, int player, int* board)
+int* checkWin(int row, int col, int player, int* board)
 {
 	// 4 directions. Horizontal, Vertical, Left diagonal and right diagonal respectively.
 	int directions[4][2] = { {0, 1}, {1, 0}, {1, 1}, {1, -1} };
@@ -110,11 +111,21 @@ int checkWin(int row, int col, int player, int* board)
 			x += direction[1];
 
 			if (n_pieces >= 4) {											// If we have counted four pieces so far we have a winner
-				return player;
+				int start_x = x - 4 * direction[1];							// We return information about the winning line such as pos and direction to highlight it in green
+				int start_y = y - 4 * direction[0];
+				int* winning_line = (int*) malloc(sizeof(int) * 5);
+				
+				winning_line[0] = player;
+				winning_line[1] = start_y;
+				winning_line[2] = start_x;
+				winning_line[3] = direction[1];
+				winning_line[4] = direction[0];
+
+				return winning_line;
 			}
 		}
 	}
-		return 0;
+	return NULL;
 }
 
 /*
@@ -128,11 +139,20 @@ int checkTie(int totalPieces, int playerOneTime, int playerTwoTime)
 }
 
 /*
-* If player is 0 no winner is declared otherwise the player number given is declared as winner and the game quits.
+* If winning_line is NULL no winner is declared otherwise the player number given is declared as winner
+* and the winning line is highlighted in green then the game quits.
 */
-void winIfWinner(int player)
+void winIfWinner(int *winning_line, int tie, int *board)
 {
-	if (player > 0 && player <= 2) {
+	if (winning_line != NULL ) {
+		int player = *winning_line;
+
+		// No line to highlight if the win was through a tie
+		if (!tie) {
+			clrscr();
+			showWinningLine(winning_line[1], winning_line[2], winning_line[3], winning_line[4], board);
+			free(winning_line);
+		}
 		centerline(strlen("Player 1 wins"));
 		printf("Player %d wins\n\n", player);
 		exit(0);
@@ -149,8 +169,8 @@ void winIfTie(int player, int playerOneTime, int playerTwoTime)
 		printf("Player 1 took: %d seconds\n", playerOneTime / 1000);
 		centerline(strlen("Player 2 took: xxx seconds"));
 		printf("Player 2 took: %d seconds\n", playerTwoTime / 1000);
-		winIfWinner(player);
-	}
+		winIfWinner(&player, 1, NULL);										// The only part we need from the winning line is the player number 
+	}																		// since there is no winning line. So we also dont need a board.
 }
 
 /*
@@ -170,8 +190,8 @@ void playerTurn(int player, int* board, int *playerTime)
 	clrscr();
 	show(board);
 
-	int winner = checkWin(row, col, player, board);
-	winIfWinner(winner);
+	int *winning_line = checkWin(row, col, player, board);
+	winIfWinner(winning_line, 0, board);
 }
 
 /*
