@@ -28,4 +28,4 @@ int checkTie(int totalPieces, int playerOneTime, int playerTwoTime);
 /*
 * Runs the main game loop.
 */
-void run();
+void runGame();

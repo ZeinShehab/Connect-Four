@@ -232,9 +232,9 @@ int testCheckTie() {
 */
 void testRun() {
 	//CASE 1:
-	run();
+	runGame();
 	//CASE 2:
-	run();
+	runGame();
 }
 
 

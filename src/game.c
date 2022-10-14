@@ -52,10 +52,13 @@ int getPlayerMove(int player, int* board)
 			}
 			printf("Invalid move. Try again.\n");
 		}
-		centerline(strlen("Player 1 move: ") + 1);
 
 		// the cursor only needs to be visible on the screen when taking user input
 		showcursor();
+		centerline(strlen("Please choose a column between 1 and 7"));
+		printf("Please choose a column between 1 and 7\n");
+
+		centerline(strlen("Player 1 move: ") + 1);
 		printf("Player %d move: ", player);
 		move = getdigit();
 		hidecursor();
@@ -174,7 +177,7 @@ void playerTurn(int player, int* board, int *playerTime)
 /*
 * Initializes the game variables and starts the game loop.
 */
-void run()
+void runGame()
 {
 	int board[BOARD_HEIGHT * BOARD_WIDTH];
 	reset(board);
