@@ -41,7 +41,8 @@ int testCheckWin() {
 
 	for (int i = 1; i < 5; i++) {
 
-		if ((checkWin(1, i, 1, board) != 1)) {
+		// Expected player 1 to win
+		if ((*(checkWin(1, i, 1, board)) != 1)) {
 			return 1;
 		}
 	}
@@ -93,8 +94,9 @@ int testCheckWin() {
 	set(3, 3, 2, board);
 	set(2, 3, 1, board);
 
+	// Expected player 1 to win
 	for (int i = 2, j = 3; i < 6 && j >= 0; i++, j--) {
-		if (checkWin(i, j, 1, board) != 1) {
+		if (*(checkWin(i, j, 1, board)) != 1) {
 			return 2;
 		}
 	}
@@ -153,7 +155,8 @@ int testCheckWin() {
 	set(2, 1, 1, board);
 	set(6, 1, 4, board);
 	
-		if ((checkWin(2, 1, 1, board) != 1)) {
+	// Expected player 1 to win
+	if (*(checkWin(2, 1, 1, board)) != 1) {
 			return 3; 
 		}
 
@@ -163,7 +166,9 @@ int testCheckWin() {
 	set(3, 2, 1, board);
 	set(2, 3, 2, board);
 	set(1, 4, 2, board);
-		if ((checkWin(1, 4, 2, board) == 1)) {
+
+	// Expected no winner
+	if (checkWin(1, 4, 2, board) != NULL) {
 			return 4;
 		}
 		reset(board);
