@@ -26,6 +26,11 @@ Print out the game board to the screen.
 void show(int* board);
 
 /*
+* Prints out the game board to the screen but also highlights the winning line in green.
+*/
+void showWinningLine(int row, int col, int dir_x, int dir_y, int* board);
+
+/*
 Returns the number of pieces already placed in given column.
 */
 int numPiecesInCol(int col, int* board);

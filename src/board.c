@@ -78,17 +78,53 @@ void show(int* board)
 		printf("\n");
 	}
 	hozLine();
+}
 
-	//// -- FOR DEBUGGING REMOVE LATER -- //
-	//if (CENTER_HOZ) {
-	//	centerline(BOARD_WIDTH * 3);
-	//}
-	//for (int i = 0; i < BOARD_WIDTH; i++) {
-	//	printf("|%d|", get(BOARD_HEIGHT - 1, i, board));
-	//}
-	//printf("\n");
-	//hozLine();
-	//// -- FOR DEBUGGING REMOVE LATER -- //
+/*
+* Prints out the game board to the screen but also highlights the winning line in green.
+*/
+void showWinningLine(int row, int col, int dir_x, int dir_y, int* board)
+{
+	if (CENTER_VER) {
+		centerTextVer(14);
+	}
+
+	hozLine();
+	int green = 0;
+	for (int i = 0; i < BOARD_HEIGHT - 1; i++) {
+		if (CENTER_HOZ) {
+			centerline(BOARD_WIDTH * 3);
+		}
+
+		for (int j = 0; j < BOARD_WIDTH; j++) {
+			int value = get(i, j, board);
+			if (i == row && col == j && green < 4) {
+				printBlue("|");
+				printIntGreen("%d", value);
+				printBlue("|");
+				row += dir_y;
+				col += dir_x;
+				green++;
+			}
+			else if (value == 0) {
+				printBlue("|");
+				printf("%d", value);
+				printBlue("|");
+			}
+			else if (value == 1) {
+				printBlue("|");
+				printIntRed("%d", value);
+				printBlue("|");
+			}
+			else {
+				printBlue("|");
+				printIntYellow("%d", value);
+				printBlue("|");
+			}
+		}
+		printf("\n");
+	}
+	hozLine();
 }
 
 /*
