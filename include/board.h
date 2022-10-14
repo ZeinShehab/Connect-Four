@@ -3,7 +3,7 @@
 #define BOARD_HEIGHT 7			// One extra row to track number of pieces in each column.
 #define BOARD_WIDTH 7
 #define CENTER_HOZ 1			// Center board horizontally
-#define CENTER_VER 0			// Center board vertically
+#define CENTER_VER 1			// Center board vertically
 
 /* 
 Return element at row i and column j.
