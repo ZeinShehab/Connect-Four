@@ -67,7 +67,7 @@ int testCheckWin() {
 |0||0||1||2||0||0||0|
 |0||1||2||1||0||0||0|
 |w||2||1||2||0||0||0|
-	* 3. The winning Move is in the middle of the diagonal line. (Failed)
+	* 3. The winning Move is in the middle of the diagonal line. (Passed)
 |0||0||0||0||0||0||0|
 |0||0||0||0||0||0||0|
 |0||0||0||1||0||0||0|
@@ -107,42 +107,11 @@ int testCheckWin() {
 
 	/*
 	*Vertical Line Test:
-	* 3 CASES:
-	* 1. the winning Move (W = 1) is on the upper edge of the vertical line. (failed)
+	* 1. the winning Move (W = 1) is on the upper edge of the vertical line. (passed)
 |0||0||0||0||0||0||0|
 |0||0||0||0||0||0||0|
 |0||w||0||0||0||0||0|
 |0||1||0||0||0||0||0|
-|0||1||0||0||0||0||0|
-|0||1||0||0||0||0||0|
----------------------
-|0||4||0||0||0||0||0|
----------------------
-	* 2. The winning Move is on the Lower edge of the vertical line. (failed)
-|0||0||0||0||0||0||0|
-|0||0||0||0||0||0||0|
-|0||1||0||0||0||0||0|
-|0||1||0||0||0||0||0|
-|0||1||0||0||0||0||0|
-|0||w||0||0||0||0||0|
----------------------
-|0||4||0||0||0||0||0|
----------------------
-	* 3. The winning Move is in the middle of the vertical line. (Failed)
-|0||0||0||0||0||0||0|
-|0||0||0||0||0||0||0|
-|0||1||0||0||0||0||0|
-|0||1||0||0||0||0||0|
-|0||w||0||0||0||0||0|
-|0||1||0||0||0||0||0|
----------------------
-|0||4||0||0||0||0||0|
----------------------
-			OR
-|0||0||0||0||0||0||0|
-|0||0||0||0||0||0||0|
-|0||1||0||0||0||0||0|
-|0||w||0||0||0||0||0|
 |0||1||0||0||0||0||0|
 |0||1||0||0||0||0||0|
 ---------------------
@@ -182,24 +151,14 @@ int testCheckWin() {
 	return 0;
 }
 
-
 /*
-* AUTOMATICALLY TESTED! 
-*TEST function for checkwin():
+* AUTOMATICALLY TESTED!
+*Test Function for CheckTie():
 * TEST CASES:
-* CASE 1: Checks all four nodes of Horizonal line individually. (*---)(-*--)(--*-)(---*)
-* CASE 2: checks all four nodes of diagonal line individually.
-* CASE 3: checks all four nodes of vertical line individually. 
-*
+* CASE 1: when the board is full and playerOneTime is less than PlayerTwoTime. (Expected: 1) (passed)
+* CASE 2: Whenthe board is full and playerOneTime is greater than PlayerTwoTime. (Expected: 2) (passed)
+* CASE 3: When the board is not full. (Expected 0) (passed)
 */
-
-
-
-
-
-
-
-//Auxiliry function
 int testCheckTie() {
 	//CASE 1: 
 	if ((checkTie(7 * 6, 2, 4)) != 1) {
@@ -219,15 +178,6 @@ int testCheckTie() {
 	
 	return 0; 
 }
-/*
-* AUTOMATICALLY TESTED!
-*Test Function for CheckTie():
-* TEST CASES:
-* CASE 1: when the board is full and playerOneTime is less than PlayerTwoTime. (Expected: 1) (passed)
-* CASE 2: Whenthe board is full and playerOneTime is greater than PlayerTwoTime. (Expected: 2) (passed)
-* CASE 3: When the board is not full. (Expected 0) (passed)
-*/
-
 
 /*
 * MANUALLY TESTED!
