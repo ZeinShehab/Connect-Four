@@ -1,10 +1,12 @@
 #include "../include/game.h"
 #include "../include/board.h"
 #include "../include/console.h"
+#include "../include/bot.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
 #include <string.h>
+
 
 /*
 * A valid move is a move that is within bounds of the board
@@ -189,9 +191,11 @@ void playerTurn(int player, int* board, int *playerTime)
 
 	clrscr();
 	show(board);
+	printf("%d", evaluate(board));
 
 	int *winning_line = checkWin(row, col, player, board);
 	winIfWinner(winning_line, 0, board);
+	
 }
 
 /*
@@ -203,6 +207,7 @@ void runGame()
 	reset(board);
 
 	clrscr();
+	
 	show(board);
 
 	int totalPieces = 0;
