@@ -191,10 +191,11 @@ void playerTurn(int player, int* board, int *playerTime)
 
 	clrscr();
 	show(board);
-	printf("%d", evaluate(board));
-
-	int *winning_line = checkWin(row, col, player, board);
-	winIfWinner(winning_line, 0, board);
+	
+	int eval = num_occurance(board, 1) - num_occurance(board, 2);
+	printf("%d\n", eval);
+	//int *winning_line = checkWin(row, col, player, board);
+	//winIfWinner(winning_line, 0, board);
 	
 }
 
@@ -219,7 +220,7 @@ void runGame()
 	while (!quit) {
 		playerTurn(1, board, &playerOneTime);
 		totalPieces++;
-
+		
 		int tieWinner = checkTie(totalPieces, playerOneTime, playerTwoTime);
 		winIfTie(tieWinner, playerOneTime, playerTwoTime);
 
