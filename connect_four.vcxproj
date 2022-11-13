@@ -109,6 +109,7 @@
     <ClCompile Include="src\game.c" />
     <ClCompile Include="src\main.c" />
     <ClCompile Include="tests\boardTests.c" />
+    <ClCompile Include="tests\botTests.c" />
     <ClCompile Include="tests\gameTests.c" />
     <ClCompile Include="tests\tests.c" />
   </ItemGroup>
@@ -118,6 +119,7 @@
     <ClInclude Include="include\console.h" />
     <ClInclude Include="include\game.h" />
     <ClInclude Include="tests\boardTests.h" />
+    <ClInclude Include="tests\botTests.h" />
     <ClInclude Include="tests\gameTests.h" />
     <ClInclude Include="tests\tests.h" />
   </ItemGroup>

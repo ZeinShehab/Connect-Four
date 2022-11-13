@@ -1,6 +1,7 @@
 #include "tests.h"
 #include "gameTests.h"
 #include "boardTests.h"
+#include "botTests.h"
 #include "../include/console.h"
 
 /*
@@ -11,6 +12,7 @@ void runTests()
 {
 	runBoardTests();
 	runGameTests();
+	runBotTests();
 }
 
 /*

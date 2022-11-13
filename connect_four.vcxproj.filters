@@ -45,6 +45,9 @@
     <ClCompile Include="src\bot.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="tests\botTests.c">
+      <Filter>Source Files\Tests</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\board.h">
@@ -67,6 +70,9 @@
     </ClInclude>
     <ClInclude Include="include\bot.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="tests\botTests.h">
+      <Filter>Header Files\Tests</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
