@@ -192,35 +192,32 @@ void playerTurn(int player, int* board, int *playerTime)
 	clrscr();
 	show(board);
 	
-	int eval = num_occurance(board, 1) - num_occurance(board, 2);
-	printf("%d\n", eval);
-	//int *winning_line = checkWin(row, col, player, board);
-	//winIfWinner(winning_line, 0, board);
+	int *winning_line = checkWin(row, col, player, board);
+	winIfWinner(winning_line, 0, board);
 	
 }
 
-/*
-* Initializes the game variables and starts the game loop.
-*/
-void runGame()
+void init(int* board)
+{
+	reset(board);
+	clrscr();
+	show(board);
+}
+
+void multiPlayer()
 {
 	int board[BOARD_HEIGHT * BOARD_WIDTH];
-	reset(board);
-
-	clrscr();
-	
-	show(board);
-
 	int totalPieces = 0;
-
 	int playerOneTime = 0;
 	int playerTwoTime = 0;
+
+	init(board);
 
 	int quit = 0;
 	while (!quit) {
 		playerTurn(1, board, &playerOneTime);
 		totalPieces++;
-		
+
 		int tieWinner = checkTie(totalPieces, playerOneTime, playerTwoTime);
 		winIfTie(tieWinner, playerOneTime, playerTwoTime);
 
@@ -229,5 +226,57 @@ void runGame()
 
 		tieWinner = checkTie(totalPieces, playerOneTime, playerTwoTime);
 		winIfTie(tieWinner, playerOneTime, playerTwoTime);
+	}
+}
+
+void singlePlayer() 
+{
+	centerline(strlen("Choose difficulty | Easy(1) | Medium(2) | Hard(3) |: 1"));
+	printf("Choose difficulty | Easy(1) | Medium(2) | Hard(3) |: ");
+	int difficulty = getdigit();
+
+	int board[BOARD_HEIGHT * BOARD_WIDTH];
+	int totalPieces = 0;
+	int playerOneTime = 0;
+	int computerTime = 0;
+
+	init(board);
+
+	int quit = 0;
+	while (!quit) {
+		playerTurn(1, board, &playerOneTime);
+		totalPieces++;
+
+		int tieWinner = checkTie(totalPieces, playerOneTime, computerTime);
+		winIfTie(tieWinner, playerOneTime, computerTime);
+
+		int computerMove = 3;  // minimax();											// time this to get computer time
+		int row = nextEmptyRow(computerMove, board);
+		makeMove(row, computerMove, 2, board);
+		clrscr();
+		show(board);
+		int* winning_line = checkWin(row, computerMove, 2, board);
+		winIfWinner(winning_line, 0, board);
+		totalPieces++;
+
+		tieWinner = checkTie(totalPieces, playerOneTime, computerTime);
+		winIfTie(tieWinner, playerOneTime, computerTime);
+	}
+}
+
+/*
+* Initializes the game variables and starts the game loop.
+*/
+void runGame()
+{
+	centerline(strlen("Multiplayer(1) or Computer(2): 1"));
+	printf("Multiplayer(1) or Computer(2): ");
+	int multiplayer = getdigit();
+
+	if (multiplayer == 1) {
+		multiPlayer();
+	}
+	if (multiplayer == 2) {
+		singlePlayer();
 	}
 }
