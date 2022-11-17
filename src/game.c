@@ -234,6 +234,18 @@ void singlePlayer()
 	centerline(strlen("Choose difficulty | Easy(1) | Medium(2) | Hard(3) |: 1"));
 	printf("Choose difficulty | Easy(1) | Medium(2) | Hard(3) |: ");
 	int difficulty = getdigit();
+	int depth = 0;
+
+	if (difficulty == 1) {
+		depth = 3;
+	}
+	else if (difficulty == 2) {
+		depth = 6;
+	}
+	else if (difficulty == 3) {
+		depth = 10;
+	}
+	else depth = 6;
 
 	int board[BOARD_HEIGHT * BOARD_WIDTH];
 	int totalPieces = 0;
@@ -250,7 +262,7 @@ void singlePlayer()
 		int tieWinner = checkTie(totalPieces, playerOneTime, computerTime);
 		winIfTie(tieWinner, playerOneTime, computerTime);
 
-		int computerMove = getComputerMove(board);  // minimax();											// time this to get computer time
+		int computerMove = getComputerMove(board, depth);  // minimax();											// time this to get computer time
 		int row = nextEmptyRow(computerMove, board);
 		makeMove(row, computerMove, 2, board);
 		clrscr();

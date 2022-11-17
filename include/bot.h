@@ -7,4 +7,4 @@
 #define POS_INF (INT_MAX - 1)
 #define NEG_INF (INT_MIN + 1)
 
-int getComputerMove(int* board);
+int getComputerMove(int* board, int depth);

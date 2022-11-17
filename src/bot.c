@@ -74,23 +74,10 @@ int nextEmptyRoww(int col, int *board) {
 }
 
 // prioritize central columns first
-int columnOrder[7] = {3, 2, 4, 1, 5, 0, 6};		// columnOrder[i] = WIDTH / 2 + (1 - 2 * (i % 2)) * (i + 1) / 2
+int columnOrder[7] = {3, 2, 4, 1, 5, 0, 6};							// columnOrder[i] = WIDTH / 2 + (1 - 2 * (i % 2)) * (i + 1) / 2
 
-int negamax(int* board, int depth, int alpha, int beta)
+int negamax(int* board, int depth, int alpha, int beta, int nbMoves, int toPlay)
 {
-	int sum1 = 0;
-	int sum2 = 0;
-	for (int i = 0; i < 7 * 6; i++) {
-		if (board[i] == 1) {
-			sum1++;
-		}
-		else if (board[i] == 2) {
-			sum2++;
-		}
-	}
-	int toPlay = sum1 > sum2 ? 2 : 1;
-	int nbMoves = sum1 + sum2;
-
 	if (nbMoves == 7 * 6) {
 		return 0;
 	}
@@ -129,7 +116,7 @@ int negamax(int* board, int depth, int alpha, int beta)
 			int row = nextEmptyRoww(columnOrder[i], board);
 
 			set(row, columnOrder[i], toPlay, board);				// make move
-			int score = -negamax(board, depth-1, -beta, -alpha);	// get score for move	
+			int score = -negamax(board, depth-1, -beta, -alpha, nbMoves+1, toPlay == 1 ? 2 : 1);	// get score for move	
 			set(row, columnOrder[i], 0, board);						// undo move
 
 			if (score >= beta) {									
@@ -143,7 +130,7 @@ int negamax(int* board, int depth, int alpha, int beta)
 	return alpha;
 }
 
-int solve(int* board)
+int solve(int* board, int depth)
 {
 	int sum1 = 0;
 	int sum2 = 0;
@@ -168,7 +155,7 @@ int solve(int* board)
 		else if (med >= 0 && max / 2 > med) {
 			med = max / 2;
 		}
-		int r = negamax(board, 10, med, med + 1);
+		int r = negamax(board, depth, med, med + 1, nbMoves, toPlay);
 		if (r <= med) {
 			max = r;
 		}
@@ -179,7 +166,7 @@ int solve(int* board)
 	return min;
 }
 
-int getComputerMove(int* board)
+int getComputerMove(int* board, int depth)
 {
 	int sum1 = 0;
 	int sum2 = 0;
@@ -194,7 +181,6 @@ int getComputerMove(int* board)
 	int toPlay = sum1 > sum2 ? 2 : 1;
 	int opp = toPlay == 1 ? 2 : 1;
 
-	int depth = 15;
 	int bestMove = 3;
 	int oldScore = NEG_INF;
 
@@ -216,7 +202,7 @@ int getComputerMove(int* board)
 		}
 
 		//int newScore = -(negamax(board, depth, NEG_INF, POS_INF));			// score move using minimax
-		int newScore = -solve(board);
+		int newScore = -solve(board, depth);
 		set(row, column, 0, board);												// undo move
 
 		if (newScore > oldScore) {												// update best score and best move
@@ -225,21 +211,21 @@ int getComputerMove(int* board)
 		}
 	}
 
-	for (int i = 0; i < 7; i++) {
-		if (!isValidMovee(board, i)) {
-			continue;
-		}
+	//for (int i = 0; i < 7; i++) {
+	//	if (!isValidMovee(board, i)) {
+	//		continue;
+	//	}
 
-		int row = nextEmptyRoww(i, board);
-		set(row, i, opp, board);
+	//	int row = nextEmptyRoww(i, board);
+	//	set(row, i, opp, board);
 
-		int* win = checkWinn(row, i, opp, board);
-		if (win != NULL) {
-			free(win);
-			set(row, i, 0, board);
-			return i;
-		}
-		set(row, i, 0, board);
-	}
+	//	int* win = checkWinn(row, i, opp, board);
+	//	if (win != NULL) {
+	//		free(win);
+	//		set(row, i, 0, board);
+	//		return i;
+	//	}
+	//	set(row, i, 0, board);
+	//}
 	return bestMove;
 }
