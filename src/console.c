@@ -60,6 +60,12 @@ void printBlue(char* string)
 	resetColor();
 }
 
+void printIntPink(char* string,int value) {
+	printf("\033[0;35m");
+	printf(string, value);
+	resetColor();
+}
+
 /*
 * Retuns the width of the current console window. Works for resizable windows.
 */

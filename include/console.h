@@ -18,6 +18,8 @@ void printIntYellow(char* string, int value);
 
 void printBlue(char* string);
 
+void printIntPink(char* string, int value);
+
 int consoleWidth();
 
 int consoleHeight();
