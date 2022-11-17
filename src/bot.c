@@ -2,105 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "../include/board.h"
-
-int score_map[BOARD_WIDTH * (BOARD_HEIGHT - 1)] =
-{
-									 3, 4, 5, 7, 5, 4, 3,
-									 4, 6, 8, 10, 8, 6, 4,
-									 5, 8, 11, 13, 11, 8, 5,
-									 5, 8, 11, 13, 11, 8, 5,
-									 4, 6, 8, 10, 8, 6, 4,
-									 3, 4, 5, 7, 5, 4, 3 
-};
-int evaluate(int* board, int player) {
-	int sum1 = 0;
-	int sum2 = 0;
-	for (int i = 0; i < 6; i++) {
-		for (int j = 0; j < 7; j++) {
-			if (board[i*7+j] == 1)
-				sum1 += score_map[j + i * 7];
-			if (board[i*7+j] == 2)
-				sum2 += score_map[j + i * 7];
-		}
-	}
-	return (sum1 - sum2) * player == 1 ? 1: -1;
-}
-
-int num_occurance(int* board, int player) {
-	int occurance[5] = { 0,0,0,0,0 };
-	int occ = 0;
-	//score horizantally 
-	for (int i = 0; i < BOARD_HEIGHT-1; i++) {
-		for (int j = 0; j < BOARD_WIDTH; j++) {
-			if (board[i * BOARD_WIDTH + j] == player)
-				occ += 1;
-			else {
-				occurance[occ] += 1;
-				occ = 0;
-			}	
-		}
-		occurance[occ] += 1;occ = 0;
-	}
-	//score vertically
-	for (int i = 0; i < BOARD_WIDTH; i++) {
-		for (int j = 0; j < BOARD_HEIGHT-1; j++) {
-			if (board[j * BOARD_WIDTH + i] == player)
-				occ += 1;
-			else {
-				occurance[occ] += 1;
-				occ = 0;
-			}
-		}
-		occurance[occ] += 1;occ = 0;
-	}
-	//score diagonally from the bottom half \/
-	for (int j = 0; j < BOARD_HEIGHT - 1; j++) {
-		for (int i = j; i < BOARD_HEIGHT - 1; i++) {
-			if (board[i * BOARD_WIDTH + i - j] == player) {
-				occ += 1;
-			}
-			else {
-				occurance[occ] += 1;
-				occ = 0;
-			}
-		}
-		occurance[occ] += 1;occ = 0;
-		for (int k = 0; k <BOARD_HEIGHT-1-j; k++) {
-			if (board[BOARD_WIDTH-1+BOARD_WIDTH*k-k+BOARD_WIDTH*j] == player) {
-				occ += 1;
-			}
-			else {
-				occurance[occ] += 1;
-				occ = 0;
-			}
-		}
-		occurance[occ] += 1;occ = 0;
-	}
-	//score diagonally from the top half 
-	for (int j = 1; j < BOARD_WIDTH ; j++) {
-		for (int i = j; i <BOARD_HEIGHT; i++) {
-			if (board[(i - j) * BOARD_WIDTH + i]==player) {
-				occ += 1;
-			}
-			else {
-				occurance[occ] += 1;
-				occ = 0;
-			}
-		}
-		occurance[occ] += 1;occ = 0;
-		for (int k = j; k < BOARD_WIDTH; k++) {
-			if (board[k * BOARD_WIDTH - k - j] == player) {
-				occ += 1;
-			}
-			else {
-				occurance[occ] += 1;
-				occ = 0;
-			}
-		}
-		occurance[occ] += 1;occ = 0;
-	}
-	return 1000*occurance[4]+100*occurance[3]+10*occurance[2];
-}
+#include "../include/console.h"
 
 int* checkWinn(int row, int col, int player, int* board)
 {
@@ -120,7 +22,7 @@ int* checkWinn(int row, int col, int player, int* board)
 		// Right most position on the right diagonal that the piece falls on
 		else if (dir == 3) {
 			x = col + row <= BOARD_WIDTH - 1 ? col + row : BOARD_WIDTH - 1;
-			y = col + row <= BOARD_WIDTH - 1 ? 0 : col + row - BOARD_WIDTH - 1;
+			y = col + row <= BOARD_WIDTH - 1 ? 0 : (col + row) - (BOARD_WIDTH - 1);
 		}
 		// Left most position on the horizontal or topmost position on the vertical. Depending on the direction.
 		// If we are iterating over the horizontal then the x would be 0 and y would be the row of the last move.
@@ -161,113 +63,165 @@ int isValidMovee(int* board, int move)
 	return board[move] == 0;
 }
 
-int isTerminal(int* board)
-{
-	for (int i = 0; i < 7; i++) {
-		if (isValidMovee(board, i)) {
-			return 0;
+int nextEmptyRoww(int col, int *board) {
+	int row = -1;
+	for (int i = 0; i < 6; i++) {
+		if (board[i * 7 + col] == 0) {
+			row = i;
 		}
 	}
-	return 1;
+	return row;
 }
 
-int minimax(int* board, int depth, int maximizingPlayer)
-{
-	if (depth == 0) {
-		return evaluate(board, 2);
-	}
+// prioritize central columns first
+int columnOrder[7] = {3, 2, 4, 1, 5, 0, 6};		// columnOrder[i] = WIDTH / 2 + (1 - 2 * (i % 2)) * (i + 1) / 2
 
-	if(isTerminal(board)) {
+int negamax(int* board, int depth, int alpha, int beta)
+{
+	int sum1 = 0;
+	int sum2 = 0;
+	for (int i = 0; i < 7 * 6; i++) {
+		if (board[i] == 1) {
+			sum1++;
+		}
+		else if (board[i] == 2) {
+			sum2++;
+		}
+	}
+	int toPlay = sum1 > sum2 ? 2 : 1;
+	int nbMoves = sum1 + sum2;
+
+	if (nbMoves == 7 * 6) {
 		return 0;
 	}
 
-	if (maximizingPlayer) {
-		int bestEvaluation = NEG_INF;
-		int evaluation = 0;
-
-		for (int i = 0; i < 7; i++) {
-			if (!isValidMovee(board, i)) {
-				continue;
-			}
-
-			int row = nextEmptyRow(i, board);
-			set(row, i, 2, board);					// make move
-
-			int* win = checkWinn(row, i, 2, board);
-			if (win != NULL) {
-				free(win);
-				set(row, i, 0, board);
-				return POS_INF;
-			}
-
-			evaluation = minimax(board, depth - 1, 0);
-			set(row, i, 0, board);					// undo move
-
-			if (evaluation > bestEvaluation) {
-				bestEvaluation = evaluation;
-			}
-		}
-		return bestEvaluation;
+	if (depth == 0) {
+		return (7 * 7 - nbMoves) / 2;
 	}
 
-	else {
-		int bestEvaluation = POS_INF;
-		int evaluation = 0;
-
-		for (int i = 0; i < 7; i++) {
-			if (!isValidMovee(board, i)) {
-				continue;
-			}
-
-			int row = nextEmptyRow(i, board);
-			set(row, i, 1, board);
-
-			int* win = checkWinn(row, i, 1, board);
+	for (int i = 0; i < 7; i++) {									// if there is a winning move return
+		if (isValidMovee(board, i)) {								// evaluation based on how many moves this win took
+			int row = nextEmptyRoww(i, board);
+			set(row, i, toPlay, board);
+			nbMoves++;
+			int* win = checkWinn(row, i, toPlay, board);
 			if (win != NULL) {
 				free(win);
-				set(row, i, 0, board);
-				return NEG_INF;
-			}
 
-			evaluation = minimax(board, depth - 1, 1);
+				set(row, i, 0, board);
+				return (7 * 7 - nbMoves) / 2;
+			}
 			set(row, i, 0, board);
+			nbMoves--;
+		}
+	}
 
-			if (evaluation < bestEvaluation) {
-				bestEvaluation = evaluation;
+	int max = (7 * 5 - nbMoves)/2;									// upper bound for beta
+	if (beta > max) {
+		beta = max;
+		if (alpha >= beta) {
+			return beta;
+		}
+	}
+
+	for (int i = 0; i < 7; i++) {
+		if (isValidMovee(board, columnOrder[i])) {
+			int row = nextEmptyRoww(columnOrder[i], board);
+
+			set(row, columnOrder[i], toPlay, board);				// make move
+			int score = -negamax(board, depth-1, -beta, -alpha);	// get score for move	
+			set(row, columnOrder[i], 0, board);						// undo move
+
+			if (score >= beta) {									
+				return score;
+			}
+			if (score > alpha) {
+				alpha = score;
 			}
 		}
-		return bestEvaluation;
 	}
+	return alpha;
+}
+
+int solve(int* board)
+{
+	int sum1 = 0;
+	int sum2 = 0;
+	for (int i = 0; i < 7 * 6; i++) {
+		if (board[i] == 1) {
+			sum1++;
+		}
+		else if (board[i] == 2) {
+			sum2++;
+		}
+	}
+	int toPlay = sum1 > sum2 ? 2 : 1;
+	int nbMoves = sum1 + sum2;
+	int min = -(7 * 6 - nbMoves) / 2;
+	int max = (7 * 7 - nbMoves) / 2;
+
+	while (min < max) {
+		int med = min + (max - min) / 2;
+		if (med <= 0 && min / 2 < med) {
+			med = min / 2;
+		}
+		else if (med >= 0 && max / 2 > med) {
+			med = max / 2;
+		}
+		int r = negamax(board, 10, med, med + 1);
+		if (r <= med) {
+			max = r;
+		}
+		else {
+			min = r;
+		}
+	}
+	return min;
 }
 
 int getComputerMove(int* board)
 {
-	int depth = 3;
+	int sum1 = 0;
+	int sum2 = 0;
+	for (int i = 0; i < 7 * 6; i++) {
+		if (board[i] == 1) {
+			sum1++;
+		}
+		else if (board[i] == 2) {
+			sum2++;
+		}
+	}
+	int toPlay = sum1 > sum2 ? 2 : 1;
+	int opp = toPlay == 1 ? 2 : 1;
+
+	int depth = 15;
 	int bestMove = 3;
-	int oldScore = 0;
+	int oldScore = NEG_INF;
 
 	for (int i = 0; i < 7; i++) {
+		int column = columnOrder[i];
 
-		if (!isValidMovee(board, i)) {
+		if (!isValidMovee(board, column)) {
 			continue;
 		}
 
-		int row = nextEmptyRow(i, board);
-		set(row, i, 2, board);
+		int row = nextEmptyRoww(column, board);									// make move
+		set(row, column, toPlay, board);
 
-		int* win = checkWinn(row, i, 2, board);
+		int* win = checkWinn(row, column, toPlay, board);						// if there is a winning move take it. no need to search
 		if (win != NULL) {
 			free(win);
-			set(row, i, 0, board);
-			return i;
+			set(row, column, 0, board);
+			return column;
 		}
 
-		int newScore = -minimax(board, depth, 0);
-		set(row, i, 0, board);
+		//int newScore = -(negamax(board, depth, NEG_INF, POS_INF));			// score move using minimax
+		int newScore = -solve(board);
+		set(row, column, 0, board);												// undo move
 
-		if (newScore > oldScore) {
+		if (newScore > oldScore) {												// update best score and best move
 			oldScore = newScore;
-			bestMove = i;
+			bestMove = column;
 		}
 	}
 
@@ -276,10 +230,10 @@ int getComputerMove(int* board)
 			continue;
 		}
 
-		int row = nextEmptyRow(i, board);
-		set(row, i, 1, board);
+		int row = nextEmptyRoww(i, board);
+		set(row, i, opp, board);
 
-		int* win = checkWinn(row, i, 1, board);
+		int* win = checkWinn(row, i, opp, board);
 		if (win != NULL) {
 			free(win);
 			set(row, i, 0, board);
