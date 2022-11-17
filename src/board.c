@@ -49,7 +49,16 @@ void show(int* board)
 	if (CENTER_VER) {
 		centerTextVer(14);
 	}
-
+	if (CENTER_HOZ) {
+		centerline(BOARD_WIDTH * 3);
+	}
+	
+	for (int i = 1; i <=BOARD_WIDTH; i++) {
+		printBlue("|");
+		printIntPink("%d", i );
+		printBlue("|");
+	}
+	printf("\n");
 	hozLine();
 	for (int i = 0; i < BOARD_HEIGHT-1; i++) {
 		if (CENTER_HOZ) {
@@ -88,7 +97,16 @@ void showWinningLine(int row, int col, int dir_x, int dir_y, int* board)
 	if (CENTER_VER) {
 		centerTextVer(14);
 	}
+	if (CENTER_HOZ) {
+		centerline(BOARD_WIDTH * 3);
+	}
 
+	for (int i = 1; i <= BOARD_WIDTH; i++) {
+		printBlue("|");
+		printIntPink("%d", i);
+		printBlue("|");
+	}
+	printf("\n");
 	hozLine();
 	int green = 0;
 	for (int i = 0; i < BOARD_HEIGHT - 1; i++) {
