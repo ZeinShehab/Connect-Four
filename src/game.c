@@ -8,7 +8,6 @@
 #include <string.h>
 
 char* names[3];
-int started;
 int pr = 1;
 
 /*
@@ -68,13 +67,13 @@ int getPlayerMove(int player, int* board, char* name)
 			printIntRed("%d", 1);
 		else
 			printIntYellow("%d", 2);
-		pr = pr == 1 ? 0 : 1;
 		printf("): ");
 		move = getdigit();
 		hidecursor();
 
 		invalidCounter++;
 	}
+	pr = pr == 1 ? 0 : 1;
 	// user input is 1 indexed so it returns 0 indexed column
 	return move - 1;
 }
@@ -246,7 +245,6 @@ void multiPlayer()
 
 
 	while (!quit) {
-		started = start;
 		playerTurn(1, board, &playerOneTime, names[start]);
 		totalPieces++;
 
@@ -302,39 +300,39 @@ void singlePlayer()
 	while (!quit) {
 		
 		if(num==1){
-			started = start;
-			playerTurn(start, board, &playerOneTime,name);
+			playerTurn(1, board, &playerOneTime,name);
 			totalPieces++;
 			int tieWinner = checkTie(totalPieces, playerOneTime, computerTime);
 			winIfTie(tieWinner, playerOneTime, computerTime,name);
 
 			int computerMove = getComputerMove(board, depth);  // minimax();											// time this to get computer time
 			int row = nextEmptyRow(computerMove, board);
-			makeMove(row, computerMove, sec_start, board);
+			makeMove(row, computerMove, 2, board);
 			clrscr();
 			show(board);
-			int* winning_line = checkWin(row, computerMove, sec_start, board);
+			int* winning_line = checkWin(row, computerMove, 2, board);
 			winIfWinner(winning_line, 0, board,"Computer");
 			totalPieces++;
+			pr = pr == 1 ? 0 : 1;
 
 			tieWinner = checkTie(totalPieces, playerOneTime, computerTime);
 			winIfTie(tieWinner, playerOneTime, computerTime,"Computer");
 		}
 		else {
-			started = start;
 			int computerMove = getComputerMove(board, depth);  // minimax();											// time this to get computer time
 			int row = nextEmptyRow(computerMove, board);
-			makeMove(row, computerMove, start, board);
+			makeMove(row, computerMove, 1, board);
 			clrscr();
 			show(board);
-			int* winning_line = checkWin(row, computerMove, start, board);
+			int* winning_line = checkWin(row, computerMove, 1, board);
 			winIfWinner(winning_line, 0, board,"Computer");
 			totalPieces++;
+			pr = pr == 1 ? 0 : 1;
 
 			int tieWinner = checkTie(totalPieces, playerOneTime, computerTime);
 			winIfTie(tieWinner, playerOneTime, computerTime,"Computer");
 
-			playerTurn(sec_start, board, &playerOneTime,name);
+			playerTurn(2, board, &playerOneTime,name);
 			totalPieces++;
 			tieWinner = checkTie(totalPieces, playerOneTime, computerTime);
 			winIfTie(tieWinner, playerOneTime, computerTime,name);
