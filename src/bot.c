@@ -83,7 +83,7 @@ int negamax(int* board, int depth, int alpha, int beta, int nbMoves, int toPlay)
 	}
 
 	if (depth == 0) {
-		return (7 * 7 - nbMoves) / 2;
+		return (7 * 6 + 1 - nbMoves) / 2;
 	}
 
 	for (int i = 0; i < 7; i++) {									// if there is a winning move return
@@ -96,14 +96,14 @@ int negamax(int* board, int depth, int alpha, int beta, int nbMoves, int toPlay)
 				free(win);
 
 				set(row, i, 0, board);
-				return (7 * 7 - nbMoves) / 2;
+				return (7 * 6 + 1 - nbMoves) / 2;
 			}
 			set(row, i, 0, board);
 			nbMoves--;
 		}
 	}
 
-	int max = (7 * 5 - nbMoves)/2;									// upper bound for beta
+	int max = (7 * 6 - 1 - nbMoves)/2;									// upper bound for beta
 	if (beta > max) {
 		beta = max;
 		if (alpha >= beta) {
@@ -145,7 +145,7 @@ int solve(int* board, int depth)
 	int toPlay = sum1 > sum2 ? 2 : 1;
 	int nbMoves = sum1 + sum2;
 	int min = -(7 * 6 - nbMoves) / 2;
-	int max = (7 * 7 - nbMoves) / 2;
+	int max = (7 * 6 + 1 - nbMoves) / 2;
 
 	while (min < max) {
 		int med = min + (max - min) / 2;

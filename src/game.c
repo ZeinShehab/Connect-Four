@@ -273,7 +273,7 @@ void singlePlayer()
 		depth = 6;							// medium
 	}
 	else if (difficulty == 3) {
-		depth = 10;							// unwinnable
+		depth = 8;							// unwinnable
 	}
 	else depth = 6;
 

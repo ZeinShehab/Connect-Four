@@ -86,7 +86,7 @@ int negamax_house(int** board, int depth, int alpha, int beta, int nbMoves, int 
 	}
 
 	if (depth == 0) {
-		return (BOARD_WIDTH_HOUSE * BOARD_WIDTH_HOUSE - nbMoves) / 2;
+		return (BOARD_WIDTH_HOUSE * BOARD_HEIGHT_HOUSE + 1 - nbMoves) / 2;
 	}
 
 	for (int i = 0; i < BOARD_WIDTH_HOUSE; i++) {									// if there is a winning move return
@@ -99,14 +99,14 @@ int negamax_house(int** board, int depth, int alpha, int beta, int nbMoves, int 
 				free(win);
 
 				set_house(row, i, 0, board);
-				return (BOARD_WIDTH_HOUSE * BOARD_WIDTH_HOUSE - nbMoves) / 2;
+				return (BOARD_WIDTH_HOUSE * BOARD_HEIGHT_HOUSE + 1 - nbMoves) / 2;
 			}
 			set_house(row, i, 0, board);
 			nbMoves--;
 		}
 	}
 
-	int max = (BOARD_WIDTH_HOUSE * (BOARD_HEIGHT_HOUSE - 1) - nbMoves) / 2;									// upper bound for beta
+	int max = (BOARD_WIDTH_HOUSE * BOARD_HEIGHT_HOUSE - 1 - nbMoves) / 2;									// upper bound for beta
 	if (beta > max) {
 		beta = max;
 		if (alpha >= beta) {
@@ -150,7 +150,7 @@ int solve_house(int** board, int depth)
 	int toPlay = sum1 > sum2 ? 2 : 1;
 	int nbMoves = sum1 + sum2;
 	int min = -(BOARD_WIDTH_HOUSE * BOARD_HEIGHT_HOUSE - nbMoves) / 2;
-	int max = (BOARD_WIDTH_HOUSE * BOARD_WIDTH_HOUSE - nbMoves) / 2;
+	int max = (BOARD_WIDTH_HOUSE * BOARD_HEIGHT_HOUSE + 1 - nbMoves) / 2;
 
 	while (min < max) {
 		int med = min + (max - min) / 2;
@@ -173,7 +173,7 @@ int solve_house(int** board, int depth)
 
 int make_move_house(int** board)
 {
-	int depth = 10;
+	int depth = 8;
 	int sum1 = 0;
 	int sum2 = 0;
 	for (int i = 0; i < BOARD_HEIGHT_HOUSE; i++) {
