@@ -7,6 +7,9 @@
 #include <time.h>
 #include <string.h>
 
+char* names[3];
+int started;
+int pr = 1;
 
 /*
 * A valid move is a move that is within bounds of the board
@@ -40,7 +43,7 @@ void makeMove(int row, int col, int player, int* board)
 * Return column to make move in from user input.
 * Will retry until user gives valid move.
 */
-int getPlayerMove(int player, int* board)
+int getPlayerMove(int player, int* board, char* name)
 {
 	int move = -1;
 	int invalidCounter = 0;
@@ -54,14 +57,19 @@ int getPlayerMove(int player, int* board)
 			}
 			printf("Invalid move. Try again.\n");
 		}
-
 		// the cursor only needs to be visible on the screen when taking user input
 		showcursor();
 		centerline(strlen("Please choose a column between 1 and 7"));
 		printf("Please choose a column between 1 and 7\n");
 
-		centerline(strlen("Player 1 move: ") + 1);
-		printf("Player %d move: ", player);
+		centerline(strlen("EEEEEE move: ") + 1);
+		printf("%s's move (", name);
+		if(pr== 1)
+			printIntRed("%d", 1);
+		else
+			printIntYellow("%d", 2);
+		pr = pr == 1 ? 0 : 1;
+		printf("): ");
 		move = getdigit();
 		hidecursor();
 
@@ -144,7 +152,7 @@ int checkTie(int totalPieces, int playerOneTime, int playerTwoTime)
 * If winning_line is NULL no winner is declared otherwise the player number given is declared as winner
 * and the winning line is highlighted in green then the game quits.
 */
-void winIfWinner(int *winning_line, int tie, int *board)
+void winIfWinner(int *winning_line, int tie, int *board,char* name)
 {
 	if (winning_line != NULL ) {
 		int player = *winning_line;
@@ -155,8 +163,8 @@ void winIfWinner(int *winning_line, int tie, int *board)
 			showWinningLine(winning_line[1], winning_line[2], winning_line[3], winning_line[4], board);
 			free(winning_line);
 		}
-		centerline(strlen("Player 1 wins"));
-		printf("Player %d wins\n\n", player);
+		centerline(strlen("EEEEEEEE wins"));
+		printf("%s wins\n\n", name);
 		exit(0);
 	}
 }
@@ -164,24 +172,24 @@ void winIfWinner(int *winning_line, int tie, int *board)
 /*
 * If player is 0 no winner is declared otherwise the player times along with the winner will be displayed.
 */
-void winIfTie(int player, int playerOneTime, int playerTwoTime)
+void winIfTie(int player, int playerOneTime, int playerTwoTime,char* name)
 {
 	if (player > 0 && player <= 2) {
-		centerline(strlen("Player 1 took: xxx seconds"));
-		printf("Player 1 took: %d seconds\n", playerOneTime / 1000);
-		centerline(strlen("Player 2 took: xxx seconds"));
-		printf("Player 2 took: %d seconds\n", playerTwoTime / 1000);
-		winIfWinner(&player, 1, NULL);										// The only part we need from the winning line is the player number 
+		centerline(strlen("EEEEEEEE took: xxx seconds"));
+		printf("%s took: %d seconds\n",names[1], playerOneTime / 1000);
+		centerline(strlen("EEEEEEEE took: xxx seconds"));
+		printf("%s took: %d seconds\n", names[2], playerTwoTime / 1000);
+		winIfWinner(&player, 1, NULL, name);										// The only part we need from the winning line is the player number 
 	}																		// since there is no winning line. So we also dont need a board.
 }
 
 /*
 * Plays out a single game cycle for given player
 */
-void playerTurn(int player, int* board, int *playerTime)
+void playerTurn(int player, int* board, int *playerTime, char* name)
 {
 	clock_t start = clock(), diff;
-	int col = getPlayerMove(player, board);									// time this to know how much time player took to make a move.
+	int col = getPlayerMove(player, board,name);									// time this to know how much time player took to make a move.
 	diff = clock() - start;
 	int msec = diff * 1000 / CLOCKS_PER_SEC;
 	*playerTime += msec;
@@ -193,7 +201,7 @@ void playerTurn(int player, int* board, int *playerTime)
 	show(board);
 	
 	int *winning_line = checkWin(row, col, player, board);
-	winIfWinner(winning_line, 0, board);
+	winIfWinner(winning_line, 0, board,name);
 	
 }
 
@@ -212,20 +220,44 @@ void multiPlayer()
 	int playerTwoTime = 0;
 
 	init(board);
-
+	srand(time(NULL));
+	int num = (rand() % 2) + 1;
+	int start = num;
+	int sec_start = abs(3 - num);
 	int quit = 0;
+	char p1[6];
+	char p2[6];
+
+	if (CENTER_HOZ) {
+		centerline(strlen("Enter your name: EEEEEE"));
+	}
+	printf("Enter your name: ");
+	gets(p1);
+	if (CENTER_HOZ) {
+		centerline(strlen("Enter your name: EEEEEE"));
+	}
+	printf("Enter your name: ");
+	gets(p2);
+	char* first = (num == 1) ? p1 : p2;
+	char* second = (num == 1) ? p2 : p1;
+	names[start] = first;
+	names[sec_start] = second;
+
+
+
 	while (!quit) {
-		playerTurn(1, board, &playerOneTime);
+		started = start;
+		playerTurn(1, board, &playerOneTime, names[start]);
 		totalPieces++;
 
 		int tieWinner = checkTie(totalPieces, playerOneTime, playerTwoTime);
-		winIfTie(tieWinner, playerOneTime, playerTwoTime);
+		winIfTie(tieWinner, playerOneTime, playerTwoTime,names[start]);
 
-		playerTurn(2, board, &playerTwoTime);
+		playerTurn(2, board, &playerTwoTime,names[sec_start]);
 		totalPieces++;
 
 		tieWinner = checkTie(totalPieces, playerOneTime, playerTwoTime);
-		winIfTie(tieWinner, playerOneTime, playerTwoTime);
+		winIfTie(tieWinner, playerOneTime, playerTwoTime,names[sec_start]);
 	}
 }
 
@@ -237,15 +269,17 @@ void singlePlayer()
 	int depth = 0;
 
 	if (difficulty == 1) {
-		depth = 3;
+		depth = 2;							// very easy
 	}
 	else if (difficulty == 2) {
-		depth = 6;
+		depth = 6;							// medium
 	}
 	else if (difficulty == 3) {
-		depth = 10;
+		depth = 10;							// unwinnable
 	}
 	else depth = 6;
+
+
 
 	int board[BOARD_HEIGHT * BOARD_WIDTH];
 	int totalPieces = 0;
@@ -253,26 +287,59 @@ void singlePlayer()
 	int computerTime = 0;
 
 	init(board);
-
+	srand(time(NULL));
+	int num = (rand() % 2) + 1;
+	int start = num;
+	int sec_start = abs(3 - num);
+	char name[10];
+	if (CENTER_HOZ) {
+		centerline(strlen("Enter your name: EEEEEE"));
+	}
+	printf("Enter your name: ");
+	gets(name);
 	int quit = 0;
+
 	while (!quit) {
-		playerTurn(1, board, &playerOneTime);
-		totalPieces++;
+		
+		if(num==1){
+			started = start;
+			playerTurn(start, board, &playerOneTime,name);
+			totalPieces++;
+			int tieWinner = checkTie(totalPieces, playerOneTime, computerTime);
+			winIfTie(tieWinner, playerOneTime, computerTime,name);
 
-		int tieWinner = checkTie(totalPieces, playerOneTime, computerTime);
-		winIfTie(tieWinner, playerOneTime, computerTime);
+			int computerMove = getComputerMove(board, depth);  // minimax();											// time this to get computer time
+			int row = nextEmptyRow(computerMove, board);
+			makeMove(row, computerMove, sec_start, board);
+			clrscr();
+			show(board);
+			int* winning_line = checkWin(row, computerMove, sec_start, board);
+			winIfWinner(winning_line, 0, board,"Computer");
+			totalPieces++;
 
-		int computerMove = getComputerMove(board, depth);  // minimax();											// time this to get computer time
-		int row = nextEmptyRow(computerMove, board);
-		makeMove(row, computerMove, 2, board);
-		clrscr();
-		show(board);
-		int* winning_line = checkWin(row, computerMove, 2, board);
-		winIfWinner(winning_line, 0, board);
-		totalPieces++;
+			tieWinner = checkTie(totalPieces, playerOneTime, computerTime);
+			winIfTie(tieWinner, playerOneTime, computerTime,"Computer");
+		}
+		else {
+			started = start;
+			int computerMove = getComputerMove(board, depth);  // minimax();											// time this to get computer time
+			int row = nextEmptyRow(computerMove, board);
+			makeMove(row, computerMove, start, board);
+			clrscr();
+			show(board);
+			int* winning_line = checkWin(row, computerMove, start, board);
+			winIfWinner(winning_line, 0, board,"Computer");
+			totalPieces++;
 
-		tieWinner = checkTie(totalPieces, playerOneTime, computerTime);
-		winIfTie(tieWinner, playerOneTime, computerTime);
+			int tieWinner = checkTie(totalPieces, playerOneTime, computerTime);
+			winIfTie(tieWinner, playerOneTime, computerTime,"Computer");
+
+			playerTurn(sec_start, board, &playerOneTime,name);
+			totalPieces++;
+			tieWinner = checkTie(totalPieces, playerOneTime, computerTime);
+			winIfTie(tieWinner, playerOneTime, computerTime,name);
+		}
+
 	}
 }
 
